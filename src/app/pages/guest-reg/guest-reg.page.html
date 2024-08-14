@@ -1,0 +1,40 @@
+<!-- guest-register.page.html -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Guest Register
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="guestForm" (ngSubmit)="addGuestInformation()">
+    <ion-item>
+      <ion-label position="floating">ID Number</ion-label>
+      <ion-input formControlName="idNumber" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Stage Name</ion-label>
+      <ion-input formControlName="stageName" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Artist Type</ion-label>
+      <ion-input formControlName="artistType" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Social Media Link</ion-label>
+      <ion-input formControlName="socialMediaLink" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">YouTube Link</ion-label>
+      <ion-input formControlName="youtubeLink" type="text"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit">Submit</ion-button>
+  </form>
+</ion-content>

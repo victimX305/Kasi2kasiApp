@@ -1,0 +1,48 @@
+<ion-content [fullscreen]="true">
+  <div class="circleBase type2 circle1"></div>
+  <div class="circleBase type1"></div>
+  <div class="circleBase type2 circle2"></div>
+
+  <ion-label class="welcomeMessage">
+    <ion-text color="light">Welcome Back,</ion-text> 
+    <ion-text color="white">
+      <p style="color:white">Log In!</p>
+    </ion-text>
+  </ion-label> 
+
+
+  <form (submit)="onFormSubmit($event)">
+    <ion-list lines="none" class="ion-margin ion-padding ion-text-center">
+
+      <ion-item class="ion-margin-vertical">
+        <ion-icon name="mail-outline" slot="end" color="medium"></ion-icon>
+        <ion-input name="email" placeholder="Enter Email Address" [(ngModel)]="loginData.email"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-vertical">
+        <ion-icon name="eye" slot="end" color="medium"></ion-icon>
+        <ion-input name="password"  placeholder="Enter Password" [(ngModel)]="loginData.password"></ion-input>
+      </ion-item>
+     
+
+      <ion-row class="ion-margin-vertical">
+        <ion-col size="6" class="alignItems">
+          
+        </ion-col>
+        <ion-col size="6">
+          <div align=left>
+            <ion-note color=primary>Forgot password?</ion-note>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-button color="primary" shape="round" >Login</ion-button>
+      
+      <p class="signup">
+        <ion-note>
+          Not a member yet? <ion-text [routerLink]="['/chat-signup']" color="primary">Sign Up</ion-text>
+        </ion-note>
+      </p>
+    </ion-list>
+  </form>
+</ion-content>

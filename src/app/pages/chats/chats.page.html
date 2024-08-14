@@ -1,0 +1,142 @@
+<ion-header class="title-header">
+  <ion-toolbar color="primary">
+    <ion-title>Chats</ion-title>
+    
+   
+    
+    <ion-buttons slot="start">
+      <ion-back-button (click)="openModal()"></ion-back-button>
+    </ion-buttons>
+    
+    <!-- Popover for settings menu -->
+    <ion-popover trigger="popoverTrigger" triggerAction="click" #popover>
+      <ng-template>
+        <ion-list>
+          <ion-item (click)="handlePopoverClick('chat')">
+            <ion-icon name ="image-outline" slot="start"></ion-icon>
+            <ion-label>Wallpaper</ion-label>
+          </ion-item>
+          
+        </ion-list>
+      </ng-template>
+    </ion-popover>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <app-empty-screen *ngIf="(chatRooms | async)?.length == 0" [model]="model"></app-empty-screen>
+
+  <ng-container *ngIf="(chatRooms | async) as rooms">
+    <ion-list *ngIf="rooms?.length > 0">
+      <ion-list-header class="ion-padding-bottom" color="light">
+        RECENT CHATS
+      </ion-list-header>
+  
+      <ion-list>
+        <ion-item-sliding *ngFor="let room of rooms">
+          <ion-item (click)="getChat(room)" [detail]="true" *ngIf="!room.deleted">
+            <ng-container *ngIf="(room?.user | async) as user">
+              <ion-avatar slot="start">
+                <img [src]="getUser(user)?.proPic" [class.rounded-avatar]="true" />
+              </ion-avatar>
+              <ion-label>
+                <div class="chat-item-content">
+                  <div class="chat-item-main">
+                    {{ getUser(user)?.fullname }}
+                    <div *ngIf="messageObservables[room.id] | async as message" class="message-container">
+                      <div *ngIf="message.messageType === 'image'" class="message-type">
+                        <ion-icon name="image-outline"></ion-icon>
+                        <span>image</span>
+                      </div>
+                      <div *ngIf="message.messageType === 'voice'" class="message-type">
+                        <ion-icon name="mic-outline"></ion-icon>
+                        <span>voice note</span>
+                      </div>
+                      <div *ngIf="message.messageType !== 'image' && message.messageType !== 'voice'" class="truncate-text">
+                        <span>{{ message.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="chat-item-meta">
+                    <ng-container *ngIf="messageObservables[room.id] | async as message">
+                      <small [ngStyle]="{'color': message.unreadCount > 0 ? 'red' : 'inherit'}">{{ message.time }}</small>
+                      <!-- Display unread count next to time -->
+                      <div *ngIf="message.unreadCount > 0" class="unread-count-badge">{{ message.unreadCount }}</div>
+                    </ng-container>
+                  </div>
+                </div>
+              </ion-label>
+            </ng-container>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="deleteChatRoom(room.id)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-list>
+  </ng-container>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+   
+
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button (click)="newChat()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-modal #new_chat [isOpen]="open_new_chat" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>New Chat</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+
+        <ion-segment [value]="segment" mode="md" (ionChange)="onSegmentsChanged($event)">
+          <ion-segment-button value="eventOrganizers">
+            Organizer
+          </ion-segment-button>
+          <ion-segment-button value="guests">
+            Guest
+          </ion-segment-button>
+        </ion-segment>
+      </ion-header>
+
+      <ion-content color="light">
+        <ion-searchbar (ionChange)="filterUsers($event)" [(ngModel)]="searchTerm" (ionClear)="clearSearch()" placeholder="Search users"></ion-searchbar>
+
+        <!-- Display Users -->
+        <div class="margin-top">
+          <ion-label>Select User</ion-label>
+        </div>
+
+        <ion-list class="ion-margin-top" *ngIf="(filteredUsers | async) as usersData" [style.background]="'transparent'" lines="none">
+          <ng-container *ngIf="usersData.length > 0; else noUsers">
+            <app-user-list *ngFor="let user of usersData" [item]="user" (onClick)="startChat(user)"></app-user-list>
+          </ng-container>
+        </ion-list>
+      
+        <!-- No match found message -->
+        <ng-template #noUsers>
+          <ion-item>No match found</ion-item>
+        </ng-template>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

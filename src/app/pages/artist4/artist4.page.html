@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Artists</ion-title>
+    <ion-buttons class="--ion-justify-content-end" (click)="navigateTo()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+
+  <ion-searchbar show-clear-button="never" [(ngModel)]="searchText" (ionInput)="filterArtists()"></ion-searchbar>
+
+  <div *ngIf="showNoMatchesMessage && filteredGuests.length === 0" class="no-matches">
+    No matching artists found.
+  </div>
+
+  <div *ngFor="let artist of filteredGuests">
+    <ion-item (click)="OpenModal(artist)">
+    <div class="description">
+      <h2>{{ artist.StageName }}</h2>
+      <p>{{ artist.ArtistType }}</p>
+    </div>
+    <ion-button fill="clear" >
+      <div class="thumbnail">
+        <img [src]="artist.proPic" alt="{{ artist.name }}">
+      </div>
+      </ion-button>
+    </ion-item>
+  </div>
+</ion-content>

@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>preck</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <app-empty-screen
+  *ngIf="(chatRooms | async)?.length == 0"
+   [model]="model">
+</app-empty-screen>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">preck</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>

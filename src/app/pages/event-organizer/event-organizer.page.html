@@ -1,0 +1,155 @@
+<ion-content [fullscreen]="true">
+  <div class="logo-container">
+    <ion-item >
+    <ion-img src="assets/LOGO.png" class="logo" ></ion-img>
+    </ion-item>
+  </div>
+
+  <div class="header">
+    <h4 title="header" >Fill in the following</h4>
+    <p>Start your event organizing!!!</p> 
+   
+  </div>
+
+  <form #signupForm="ngForm" >
+    <ion-row class = "ion-justify-content-center">
+      <ion-col size = "12" sizeMd = "8" sizeLg="6" sizeXl="4">
+    <div class="ion-padding">
+    <ion-item [formGroup]="myForm">
+      <ion-input placeholder="Id number" name="idNumber" [(ngModel)]="eventOrganizerInfor.idNumber" formControlName = "idNumber"></ion-input>
+      <ion-icon name="person-outline"></ion-icon>
+    </ion-item>
+
+    <ion-text color="danger" *ngIf="myForm.get('idNumber')?.hasError('required') && (myForm.get('idNumber')?.touched || myForm.get('idNumber')?.dirty)">
+      Input cannot be empty.
+    </ion-text>
+    <ion-text color="danger" *ngIf="myForm.get('idNumber')?.hasError('numeric') && (myForm.get('idNumber')?.touched || myForm.get('idNumber')?.dirty)">
+      Phone number must contain only numeric characters.
+    </ion-text>
+    <ion-text color="danger" *ngIf="myForm.get('idNumber')?.hasError('invalidIdNumber') && (myForm.get('idNumber')?.touched || myForm.get('idNumber')?.dirty)">
+      Phone number must contain exactly 13 digits.
+    </ion-text>
+
+    <ion-item [formGroup]="myForm">
+      <ion-input placeholder="Company Name" name="CompanyName"  [(ngModel)]="eventOrganizerInfor.CompanyName" formControlName = "CompanyName"></ion-input>
+      <ion-icon name="business-outline"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="myForm.get('CompanyName')?.hasError('required') && (myForm.get('CompanyName')?.touched || myForm.get('CompanyName')?.dirty)">
+      Input cannot be empty.
+    </ion-text>
+
+    <ion-item [formGroup]="myForm">
+      <ion-input placeholder="Registration Number" name="RegistrationNumber"  [(ngModel)]="eventOrganizerInfor.RegistrationNumber" formControlName="RegistrationNumber" (input)="onRegistrationNumberChange($event)"></ion-input>
+      <ion-icon name="terminal-outline"></ion-icon>
+    </ion-item>
+    
+
+<ion-text color="danger" *ngIf="myForm.get('RegistrationNumber')?.hasError('required') && (myForm.get('RegistrationNumber')?.touched || myForm.get('RegistrationNumber')?.dirty)">
+  Registration number is required.
+</ion-text>
+<ion-text color="danger"
+  *ngIf="myForm.get('RegistrationNumber')?.hasError('invalidRegistrationNumberFormat') && (myForm.get('RegistrationNumber')?.touched || myForm.get('RegistrationNumber')?.dirty)">
+  Registration number must be in the format '1234/123456/12'.
+</ion-text>
+
+
+<ion-item [formGroup]="myForm">
+  <ion-input placeholder="Tax Number" name="TaxNumber"  [(ngModel)]="eventOrganizerInfor.TaxNumber" formControlName = "TaxNumber"></ion-input>
+  <ion-icon name="terminal-outline"></ion-icon>
+</ion-item>
+
+<ion-text color="danger" *ngIf="myForm.get('TaxNumber')?.hasError('required') && (myForm.get('TaxNumber')?.touched || myForm.get('TaxNumber')?.dirty)">
+  Input cannot be empty.
+</ion-text>
+<ion-text color="danger" *ngIf="myForm.get('TaxNumber')?.hasError('numeric') && (myForm.get('TaxNumber')?.touched || myForm.get('TaxNumber')?.dirty)">
+  Text number must contain only numeric characters.
+</ion-text>
+
+<ion-text color="danger" *ngIf="myForm.get('TaxNumber')?.hasError('invalidTaxNum') && (myForm.get('TaxNumber')?.touched || myForm.get('TaxNumber')?.dirty)">
+  Tax number for a business must begin nine(9) and must contain exactly 10 digits.
+</ion-text>
+</div>
+  
+  
+  <!--<div class="ion-padding">
+    <ion-button expand="full" (click)="showFileInput('idImgInput')">
+      Id Upload
+    </ion-button>
+    <input type="file" accept=".pdf,.jpg,.png,.jpeg" name="idImg" hidden (change)="onFileChange($event, 'idImg')" #idImgInput>
+  </div>
+  
+  <div class="ion-padding">
+    <ion-button expand="full" (click)="showFileInput('selfieImgInput')">
+      Selfie With Id Upload
+    </ion-button>
+    <input type="file" accept=".pdf,.jpg,.png,.jpeg" name="selfieImg" hidden (change)="onFileChange($event, 'selfieImg')" #selfieImgInput>
+  </div>-->
+
+
+  
+ 
+  <ion-item [formGroup]="myForm">
+    <div class="grid w-full max-w-xs items-center gap-1.5">
+      <label class="text-sm text-gray-400 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" (click)="showFileInput('idImgInput')"
+      >
+        Id Upload
+      </label>
+      <br>
+      <input
+        id="idImg"
+        type="file"
+        class="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"
+        accept=".pdf"
+        (change)="onFileChange($event, 'idImg')"
+        formControlName = "idImg"
+      >
+    </div>
+  </ion-item>
+  <ion-text color="danger" *ngIf="myForm.get('idImg')?.hasError('requiredFileSelected') && (myForm.get('idImg')?.touched || myForm.get('idImg')?.dirty)">
+    Please select a file.
+  </ion-text>
+   <br>
+
+
+ <ion-item [formGroup]="myForm">
+  <div class="grid w-full max-w-xs items-center gap-1.5">
+    <label class="text-sm text-gray-400 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"  (click)="showFileInput('selfieImgInput')">
+      Selfie With Id Upload
+    </label>
+    <br>
+    
+    <input
+      id="selfieImg"
+      type="file"
+      class="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"
+      accept=".jpg,.png,.jpeg"
+      (change)="onFileChange($event, 'selfieImg')"
+      formControlName = "selfieImg"
+    >
+  </div>
+</ion-item>
+<ion-text color="danger" *ngIf="myForm.get('selfieImg')?.hasError('requiredFileSelected') && (myForm.get('selfieImg')?.touched || myForm.get('selfieImg')?.dirty)">
+  Please select a file.
+</ion-text>
+ <br>
+
+
+
+  <ion-item>
+    <ion-label>Accept Terms and Conditions</ion-label>
+    <ion-checkbox [(ngModel)]="termsAccepted" name="termsAccepted">I accept the Terms and Conditions</ion-checkbox>
+  </ion-item>
+  
+  <div class="ion-padding">
+    <ion-button expand="full" (click)="signOutAndProceedWithRegistration()" [disabled]="!termsAccepted">
+      Submit
+    </ion-button>
+    <ion-button expand="full" [routerLink]="['/login']" color="danger">
+      Cancel
+    </ion-button>
+  </div>
+  </ion-col>
+  </ion-row>
+  </form>
+  
+</ion-content>

@@ -1,0 +1,84 @@
+<ion-content [fullscreen]="true">
+  <div class="logo-container">
+    <ion-item >
+    <ion-img src="assets/LOGO.png" class="logo" ></ion-img>
+    </ion-item>
+  </div>
+
+  <div class="header">
+    <h4 title="header" >Fill in the following</h4>
+    <p>Be A Verifired Guest</p> 
+  </div>
+
+  <ion-row class = "ion-justify-content-center">
+    <ion-col size = "12" sizeMd = "8" sizeLg="6" sizeXl="4">
+  <form #signupForm="ngForm">
+  <div class="ion-padding">  
+      <ion-item [formGroup]="myForm">
+        <ion-input [(ngModel)]="newData.StageName"
+          (input)="clearPlaceholder()" formControlName = "StageName" name="StageName"
+          label="Stage Name:"
+        ></ion-input>
+        <ion-icon name="person" slot="end" class="icon-ion"></ion-icon>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="myForm.get('StageName')?.hasError('required') && (myForm.get('StageName')?.touched || myForm.get('StageName')?.dirty)">
+        Input cannot be empty.
+      </ion-text>
+
+    <ion-item [formGroup]="myForm">
+    <br>
+            <ion-label>Select artist type:</ion-label>
+            <br>
+            <ion-select [(ngModel)]="newData.ArtistType"  formControlName = "ArtistType" label="Artist type">
+              <ion-select-option value="Musician">Musician</ion-select-option>
+              <ion-select-option value="MC">MC</ion-select-option>
+              <ion-select-option value="Comedian">Comedian</ion-select-option>
+              <ion-select-option value="Guest Speaker">Guest Speaker</ion-select-option>
+            </ion-select>
+    <br>
+    </ion-item>
+
+    <ion-text color="danger" *ngIf="myForm.get('ArtistType')?.hasError('required') && (myForm.get('ArtistType')?.touched || myForm.get('ArtistType')?.dirty)">
+      Please select artist type.
+    </ion-text>
+
+          <ion-item [formGroup]="myForm">
+            <ion-input [(ngModel)]="newData.SocialMediaLinks" formControlName = "SocialMediaLinks"
+              (input)="clearPlaceholder()"
+              label="Social Media-Link:"
+            ></ion-input>
+            <ion-icon name="earth" slot="end" class="icon-ion"></ion-icon>
+          </ion-item>
+
+          <ion-text color="danger" *ngIf="myForm.get('SocialMediaLinks')?.hasError('required') && (myForm.get('SocialMediaLinks')?.touched || myForm.get('SocialMediaLinks')?.dirty)">
+            Input cannot be empty.
+          </ion-text>
+
+          <ion-item [formGroup]="myForm">
+            <ion-input [(ngModel)]="newData.YouTubeLink" formControlName = "YouTubeLink"
+              label="YouTube-Link:"
+              (input)="clearPlaceholder()"
+            ></ion-input>
+            <ion-icon name="logo-youtube" slot="end" class="icon-ion"></ion-icon>
+          </ion-item>
+
+          <ion-text color="danger" *ngIf="myForm.get('YouTubeLink')?.hasError('required') && (myForm.get('YouTubeLink')?.touched || myForm.get('YouTubeLink')?.dirty)">
+            Input cannot be empty.
+          </ion-text>
+   
+  <div class="ion-padding">
+    <ion-button expand="full" (click)="submitForm()">
+      Submit
+    </ion-button>
+    <ion-button expand="full"  [routerLink]="['/event-org-home']" color="danger">
+     Cancel
+    </ion-button>
+    </div>
+
+  </div>
+  </form> 
+  </ion-col>
+  </ion-row>
+   
+</ion-content>

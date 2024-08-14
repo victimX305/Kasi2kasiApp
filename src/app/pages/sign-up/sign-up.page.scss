@@ -1,0 +1,190 @@
+.input{
+  position: relative;
+  margin: 20px;
+}
+ion-item{
+  border-radius: 10px;
+  margin-bottom: 16px;
+
+}
+
+.header{
+  margin-top: 50px;
+  margin-bottom: 80px;
+  text-align: center;
+  .subTitle{
+      color:grey;
+      font-size: 0.9rem;
+  }
+  title{
+      font-size: 2rem;
+  }
+
+}
+
+.forgotpassword{
+  display: flex;
+  justify-content: flex-end;
+  a{
+      font-size: 300;
+  }
+}
+
+.logo-container {
+  display: flex;
+justify-content: center;
+align-items: center;
+  height: 50px;
+}
+
+.logo {
+  max-height: 180px;
+  width: 200px;
+  margin-top:35px;
+}
+
+/* Style for the select element */
+.registrationType {
+width: 90%; /* Make the dropdown stretch horizontally */
+padding: 10px; /* Add padding for spacing */
+font-size: 16px; /* Adjust font size */
+border: 1px solid #ccc; /* Add a border */
+border-radius: 1px; /* Add rounded corners */
+outline: none; /* Remove the default focus outline */
+}
+
+/* Style for the dropdown options */
+.registrationType option {
+font-size: 16px; /* Adjust font size */
+}
+
+ion-button {
+margin-left: 20px;
+margin-bottom: 10px;
+width: 310px;
+height: 60px;
+position: absolute;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+padding: 10px; /* Adjust the padding as needed */
+text-align: center; /* Center the text within the button */
+}
+
+.cards {
+overflow: hidden;
+position: relative;
+text-align: left;
+border-radius: 0.5rem;
+margin-top: -350px;
+max-width: 290px;
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.header {
+padding: 1.25rem 1rem 1rem 1rem;
+}
+
+.image {
+display: flex;
+margin-left: auto;
+margin-right: auto;
+flex-shrink: 0;
+justify-content: center;
+align-items: center;
+width: 3rem;
+height: 3rem;
+border-radius: 9999px;
+}
+
+.image svg {
+color: #DC2626;
+width: 1.5rem;
+height: 1.5rem;
+}
+
+.content {
+margin-top: 0.75rem;
+text-align: center;
+}
+
+.title {
+color: #111827;
+font-size: 1rem;
+font-weight: 600;
+line-height: 1.5rem;
+}
+
+.message {
+margin-top: 0.5rem;
+color: #6B7280;
+font-size: 0.875rem;
+line-height: 1.25rem;
+}
+
+.actions {
+margin: 0.75rem 1rem;
+}
+
+.desactivate {
+display: inline-flex;
+padding: 0.5rem 1rem;
+background-color: #DC2626;
+color: #ffffff;
+font-size: 1rem;
+line-height: 1.5rem;
+font-weight: 500;
+justify-content: center;
+width: 100%;
+border-radius: 0.375rem;
+border-width: 1px;
+border-color: transparent;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.cancel {
+display: inline-flex;
+margin-top: 0.75rem;
+padding: 0.5rem 1rem;
+background-color: #ffffff;
+color: #374151;
+font-size: 1rem;
+line-height: 1.5rem;
+font-weight: 500;
+justify-content: center;
+width: 100%;
+border-radius: 0.375rem;
+border: 1px solid #D1D5DB;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.center-card {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh; /* 100% of the viewport height */
+}
+
+.small-image {
+max-width: 200px; /* Set the maximum width */
+max-height: 200px; /* Set the maximum height */
+}
+
+.centered-image {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh; /* 100% of the viewport height */
+margin-top: 5px;
+}
+
+.centered-logo {
+display: block; /* Make the image a block-level element */
+margin: 20px auto; /* Center horizontally by setting left and right margins to auto */
+max-width: 200px; /* Set the maximum width as needed */
+max-height: 200px; /* Set the maximum height as needed */
+}
+
+.btn{
+width: 130px;
+}

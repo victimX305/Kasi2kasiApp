@@ -1,0 +1,70 @@
+<ion-content [fullscreen]="true">
+  <div class="logo-container">
+    <ion-item >
+    <ion-img src="assets/LOGO.png" class="logo" ></ion-img>
+    </ion-item>
+  </div>
+
+  <div class="header">
+    <h4 title="header" >Fill in the following</h4>
+    <p>Be A Verifired Organizer</p> 
+   
+  </div>
+
+
+  <ion-row class = "ion-justify-content-center">
+    <ion-col size = "12" sizeMd = "8" sizeLg="6" sizeXl="4">
+  <div class="ion-padding">  
+    
+    <ion-item [formGroup]="myForm">
+      <ion-input placeholder="Company Name" name="CompanyName"  [(ngModel)]="newData2.CompanyName" formControlName = "CompanyName"></ion-input>
+      <ion-icon name="business-outline"></ion-icon>
+    </ion-item>
+    <ion-text color="danger" *ngIf="myForm.get('CompanyName')?.hasError('required') && (myForm.get('CompanyName')?.touched || myForm.get('CompanyName')?.dirty)">
+      Input cannot be empty.
+    </ion-text>
+
+    <ion-item [formGroup]="myForm">
+      <ion-input placeholder="Registration Number" name="RegistrationNumber"  [(ngModel)]="newData2.RegistrationNumber" formControlName="RegistrationNumber" (input)="onRegistrationNumberChange($event)"></ion-input>
+      <ion-icon name="terminal-outline"></ion-icon>
+    </ion-item>
+    
+
+<ion-text color="danger" *ngIf="myForm.get('RegistrationNumber')?.hasError('required') && (myForm.get('RegistrationNumber')?.touched || myForm.get('RegistrationNumber')?.dirty)">
+  Registration number is required.
+</ion-text>
+<ion-text color="danger"
+  *ngIf="myForm.get('RegistrationNumber')?.hasError('invalidRegistrationNumberFormat') && (myForm.get('RegistrationNumber')?.touched || myForm.get('RegistrationNumber')?.dirty)">
+  Registration number must be in the format '1234/123456/12'.
+</ion-text>
+
+<ion-item [formGroup]="myForm">
+  <ion-input placeholder="Tax Number" name="TaxNumber"  [(ngModel)]="newData2.TaxNumber" formControlName = "TaxNumber"></ion-input>
+  <ion-icon name="terminal-outline"></ion-icon>
+</ion-item>
+
+<ion-text color="danger" *ngIf="myForm.get('TaxNumber')?.hasError('required') && (myForm.get('TaxNumber')?.touched || myForm.get('TaxNumber')?.dirty)">
+  Input cannot be empty.
+</ion-text>
+<ion-text color="danger" *ngIf="myForm.get('TaxNumber')?.hasError('numeric') && (myForm.get('TaxNumber')?.touched || myForm.get('TaxNumber')?.dirty)">
+  Text number must contain only numeric characters.
+</ion-text>
+
+<ion-text color="danger" *ngIf="myForm.get('TaxNumber')?.hasError('invalidTaxNum') && (myForm.get('TaxNumber')?.touched || myForm.get('TaxNumber')?.dirty)">
+  Tax number for a business must begin nine(9) and must contain exactly 10 digits.
+</ion-text>
+          
+   
+  <div class="ion-padding">
+    <ion-button expand="full" (click)="submitForm()">
+      Submit
+    </ion-button>
+    <ion-button expand="full"  [routerLink]="['/guest-home']" color="danger">
+     Cancel
+    </ion-button>
+  </div>
+
+</div>
+  </ion-col>
+  </ion-row>
+</ion-content>

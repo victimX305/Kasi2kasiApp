@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>User Information</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ user.fullname }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list lines="none">
+        <ion-item>
+          <ion-label>Fullname :</ion-label>
+          <ion-note slot="end">{{ user.fullname }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Company Name :</ion-label>
+          <ion-note slot="end">{{ user.CompanyName }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Registration Number :</ion-label>
+          <ion-note slot="end">{{ user.RegistrationNumber }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Email :</ion-label>
+          <ion-note slot="end">{{ user.email }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Id Number :</ion-label>
+          <ion-note slot="end">{{ user.idNumber }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Phone Number :</ion-label>
+          <ion-note slot="end">{{ user.phonenumber }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Province :</ion-label>
+          <ion-note slot="end">{{ user.province }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>ArtistType :</ion-label>
+          <ion-note slot="end">{{ user.ArtistType }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Registration Type :</ion-label>
+          <ion-note slot="end">{{ user.registrationType }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Stage Name :</ion-label>
+          <ion-note slot="end">{{ user.StageName }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>SocialMediaLinks:</ion-label>
+          <br>
+          <br>
+          <ion-note slot="end"><a [href] = "user.SocialMediaLinks" target ="_blank">{{ user.SocialMediaLinks }}</a></ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>YouTubeLink :</ion-label>
+          <br>
+          <br>
+
+          <ion-note slot="end"><a [href] = "user.YouTubeLink" target="_blank">{{ user.YouTubeLink }}</a></ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Terms And Conditions :</ion-label>
+          <ion-note slot="end">{{ user.termsAccepted }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Verified :</ion-label>
+          <ion-note slot="end">{{ user.verified }}</ion-note>
+        </ion-item>
+
+        <!-- Add more user details as needed -->
+        <br>
+        <ion-label class="color">ID Image</ion-label>
+        <br>
+        <ion-item>
+          <a [href]="user.idImg" target="_blank">View PDF</a>
+        </ion-item>
+         <br>
+         <ion-label class="color">Selfie Image</ion-label>
+         <br>
+        <ion-item>
+          <ion-label>Selfie Image</ion-label>
+          <ion-img [src]="user.selfieImg" alt="Selfie Image"></ion-img>
+        </ion-item>
+
+        <!-- Add more user images or details as needed -->
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+    <div>
+      <ion-button (click)="deleteUserData(user.uid)">Verify</ion-button>
+    </div>
+</ion-content>

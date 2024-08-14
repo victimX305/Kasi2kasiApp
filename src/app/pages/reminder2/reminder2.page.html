@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-buttons slot="start" class="logo-container">
+      <img src="assets/LOGO.png" alt="Logo" class="logo-image" [routerLink]="['/home-event-guest']">
+      
+    </ion-buttons>
+    <ion-buttons class="up" (click)="navigateToHome()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-card-header>
+    <ion-card-title>Reminders</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content class = "list">
+    <ng-container *ngIf="reminders.length > 0; else noEventsMessage">
+    <ion-list *ngFor="let reminder of reminders" class="card">
+      <ion-item *ngIf="reminder.eventName && reminder.documentId">
+        <ion-thumbnail>
+          <img [src] = "reminder.poster"/>
+        </ion-thumbnail>
+       
+        <ion-label class = "text">{{ reminder.eventName }}</ion-label>
+        <ion-label>{{ reminder.date | date:'dd MMM yy, h:mm a'}}</ion-label>
+        <!--<ion-button (click)="OpenModal(event)">Open</ion-button>-->
+      </ion-item>
+    </ion-list>
+    </ng-container>
+
+
+    <ng-template #noEventsMessage>
+      <div class="no-events-message">
+        <p>No set reminders available at the moment.</p>
+      </div>
+    </ng-template>
+
+  </ion-card-content>
+</ion-content>

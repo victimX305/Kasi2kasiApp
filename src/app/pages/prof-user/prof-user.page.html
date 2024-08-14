@@ -1,0 +1,55 @@
+<!-- prof-user.page.html -->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title slot="start">Profile Information</ion-title>
+    <ion-buttons class="--ion-justify-content-end" (click)="navigateToHome2()" slot="end">
+      <ion-icon name="close" slot="end"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content>
+  <ion-row class = "ion-justify-content-center">
+    <ion-col size = "12" sizeMd = "8" sizeLg="6" sizeXl="4">
+      <div *ngIf="user" class="card-container">
+        <ion-card-content>
+          <ion-card-title>{{ user?.fullname || 'Full name not provided' }}</ion-card-title>
+  <div class="container" *ngIf="user">
+    <ion-avatar class="avatar">
+      <img [src]="user?.proPic" (click)="toggleFullScreen($event)" [class.fullscreen]="isFullScreen" />
+    </ion-avatar>
+
+    <ion-icon (click)="showFileInput('fileInput')" class ="addPhoto" name="camera"> 
+      <input type="file" accept=".jpg,.png,.jpeg" hidden (change)="onFileSelected($event)" #fileInput>
+    </ion-icon>
+
+  </div>
+  
+
+  <ion-list>
+        <ion-item>
+          
+          <ion-text>{{ user?.me || 'Regular User' }}</ion-text>
+        </ion-item>
+  
+        <ion-item>
+          
+          <ion-text>{{ user?.email || 'Email not provided' }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+         
+          <ion-text>{{ user?.province || 'Email not provided' }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+      
+          <ion-text>{{ user?.phonenumber || 'Email not provided' }}</ion-text>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </div>
+  </ion-col>
+  </ion-row>
+</ion-content>

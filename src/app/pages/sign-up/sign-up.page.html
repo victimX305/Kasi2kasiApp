@@ -1,0 +1,173 @@
+<ion-content  [fullscreen]="true">
+  <div class="logo-container">
+    <ion-item>
+      <ion-img src="assets/LOGO.png" class="logo"></ion-img>
+    </ion-item>
+  </div>
+  <div *ngIf="internetStatus" class="header">
+    <h4 title="header">Welcome</h4>
+    <p>Register account</p>
+  </div>
+
+  <ion-row *ngIf="internetStatus" class = "ion-justify-content-center">
+  <ion-col size = "12" sizeMd = "8" sizeLg="6" sizeXl="4">
+  <form #signupForm="ngForm" >
+    <div class="ion-padding">
+      
+      <ion-item class="input" [formGroup]="myForm">
+        
+        <ion-input name="name" formControlName = "fullname" [(ngModel)]="basicInfor.fullname" required position="floating" type="text">Fullname</ion-input>
+        <ion-icon name="person" slot="end"></ion-icon>
+      </ion-item>
+
+    
+   <ion-text  color="danger" *ngIf="myForm.get('fullname')?.hasError('required') && (myForm.get('fullname')?.touched || myForm.get('fullname')?.dirty)">
+     Input cannot be empty.
+   </ion-text>
+   <ion-text color="danger" *ngIf="myForm.get('fullname')?.hasError('alphabetic') && (myForm.get('fullname')?.touched || myForm.get('fullname')?.dirty)">
+      Full name must contain only alphabetic characters.
+   </ion-text>
+
+      <ion-item class="input" [formGroup]="myForm">
+        <ion-input  name="email" formControlName = "email" [(ngModel)]="basicInfor.email" requiredionic  position="floating" type="email">Email</ion-input>
+        <ion-icon name="mail" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-text  color="danger" *ngIf="myForm.get('email')?.hasError('required') && (myForm.get('email')?.touched || myForm.get('email')?.dirty)">
+        Input cannot be empty.
+      </ion-text>
+      <ion-text color="danger" *ngIf="myForm.get('email')?.hasError('email') && (myForm.get('email')?.touched || myForm.get('email')?.dirty)">
+        Invalid email format.
+      </ion-text>
+
+      <ion-item class="input" [formGroup]="myForm">
+        <ion-input formControlName = "phonenumber" name="phoneNumber" [(ngModel)]="basicInfor.phonenumber" position="floating" type="text">Phone Number</ion-input>
+
+        <ion-icon name="call" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="myForm.get('phonenumber')?.hasError('required') && (myForm.get('phonenumber')?.touched || myForm.get('phonenumber')?.dirty)">
+        Input cannot be empty.
+      </ion-text>
+      <ion-text color="danger" *ngIf="myForm.get('phonenumber')?.hasError('numeric') && (myForm.get('phonenumber')?.touched || myForm.get('phonenumber')?.dirty)">
+        Phone number must contain only numeric characters.
+      </ion-text>
+      <ion-text color="danger" *ngIf="myForm.get('phonenumber')?.hasError('invalidNumber') && (myForm.get('phonenumber')?.touched || myForm.get('phonenumber')?.dirty)">
+        Phone number must begin with zero(0).
+      </ion-text>
+      <ion-text color="danger" *ngIf="myForm.get('phonenumber')?.hasError('invalidPhoneNumber') && (myForm.get('phonenumber')?.touched || myForm.get('phonenumber')?.dirty)">
+        Phone number must contain exactly 10 digits.
+      </ion-text>
+     
+
+      
+
+      <ion-item class="input" [formGroup]="myForm">
+        <ion-input
+          formControlName="password"
+          name="password"
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="basicInfor.password"
+          required
+          position="floating"
+        >
+          Password
+        </ion-input>
+        <ion-icon
+          name="{{ showPassword ? 'eye-off' : 'eye' }}"
+          slot="end"
+          (click)="togglePasswordVisibility()"
+        ></ion-icon>
+      </ion-item>
+      
+      <ion-text color="danger" *ngIf="myForm.get('password')?.hasError('required') && (myForm.get('password')?.touched || myForm.get('password')?.dirty)">
+        Password is required.
+      </ion-text>
+      <ion-text color="danger" *ngIf="myForm.get('password')?.hasError('minlength')">
+        Password must be at least 6 characters long.
+      </ion-text>
+      
+      <ion-text color="danger" *ngIf="myForm.get('password')?.hasError('pattern')">
+        Password must contain at least one lowercase letter, one uppercase letter, and one digit.
+      </ion-text>
+      
+
+      <ion-item class="input" [formGroup]="myForm">
+        <ion-select label="Province" formControlName = "province"  [(ngModel)]="basicInfor.province" >
+          <ion-select-option value="Eastern Cape">Eastern Cape</ion-select-option>
+          <ion-select-option value="Free State">Free State</ion-select-option>
+          <ion-select-option value="Gauteng">Gauteng</ion-select-option>
+          <ion-select-option value="KwaZulu-Natal">KwaZulu-Natal</ion-select-option>
+          <ion-select-option value="Limpopo">Limpopo</ion-select-option>
+          <ion-select-option value="Mpumalanga">Mpumalanga</ion-select-option>
+          <ion-select-option value="Northern Cape">Northern Cape</ion-select-option>
+          <ion-select-option value="North West">North West</ion-select-option>
+          <ion-select-option value="Western Cape">Western Cape</ion-select-option></ion-select>
+
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="myForm.get('province')?.hasError('required') && (myForm.get('province')?.touched || myForm.get('province')?.dirty)">
+        Please select a province.
+      </ion-text>
+
+      <ion-item class="input">
+        <ion-label>Registration Type</ion-label>
+        <ion-radio-group [(ngModel)]="registrationType" (ionChange)="updateRegistrationType()" [ngModelOptions]="{standalone: true}">
+          <ion-item>
+            <ion-radio value="partner">Organizer</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio value="client">User</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio value="guest">Guest</ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-item>
+      
+      <ion-item class="button" *ngIf="registrationType === 'partner'">
+        <ion-button shape = "round" (click)="isEventOrganizer = true; onSignup()">
+          Are you an event organizer? Click here
+        </ion-button>
+      </ion-item>
+
+      <ion-item class="button" *ngIf="registrationType === 'guest'">
+        <ion-button shape = "round" (click)="isGuest = true; onSignup()">
+          Are you a guest? Click here
+        </ion-button>
+      </ion-item>
+
+      <ion-item class="button" *ngIf="registrationType === 'client'">
+        <ion-button shape = "round" (click)="onSignup()">
+          Sign-Up
+        </ion-button>
+      </ion-item>
+
+      <ion-item class="input">
+        <p>Already a member? <a (click) = "login()">Login now!</a></p>
+
+      </ion-item>
+    </div>
+  </form>
+</ion-col>
+</ion-row>
+</ion-content>
+
+<div *ngIf="!internetStatus" class="no-internet-message">
+  <div class="center-card">
+    <div class="cards">
+      <div class="header">
+        <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" stroke-linejoin="round" stroke-linecap="round"></path>
+                  </svg></div>
+        <div class="content">
+           <span class="title">No Internet</span>
+           <p class="message">Failed to load events due to network issues. Make sure that you are connected to the internet. Try again.</p>
+        </div>
+         <div class="actions">
+           <button class="cancel" type="button" (click) = "retry()">Retry</button>
+        </div>
+      </div>
+      </div>
+    </div>
+</div>

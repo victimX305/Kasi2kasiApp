@@ -1,0 +1,84 @@
+<ion-content *ngIf="internetStatus">
+  <ion-row class = "ion-justify-content-center">
+    <ion-col size = "12" sizeMd = "8" sizeLg="6" sizeXl="4">
+  <div class="logo-container">
+    <ion-item>
+      <ion-img src="assets/LOGO.png" class="logo"></ion-img>
+    </ion-item>
+  </div>
+
+  <div class="form-container">
+  <div class="header">
+    <h4 class="title">Welcome back</h4>
+    <p class="subTitle">Sign in to your account</p>
+  </div>
+
+  
+  <form (submit)="onFormSubmit($event)">
+    <div class="ion-padding">
+      <ion-item>
+        <ion-label>Email:</ion-label>
+        <ion-input
+          class="input"
+          [(ngModel)]="loginData.email"
+          name="username"
+          required
+          type="email"
+        ></ion-input>
+        <ion-icon name="mail" slot="end"></ion-icon>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Password:</ion-label>
+        <ion-input
+          class="input"
+          [(ngModel)]="loginData.password"
+          name="password"
+          [type]="showPassword ? 'text' : 'password'"
+          required
+        ></ion-input>
+        <ion-icon
+        name="{{ showPassword ? 'eye-off' : 'eye' }}"
+        slot="end"
+        (click)="togglePasswordVisibility()"></ion-icon>
+    </ion-item>
+</div>
+      <div class="forgotpassword">
+        <a (click) = "forgotpassword()" style="color: blue;">Forgot password?</a>
+      </div>
+      <div class="forgotpassword">
+        <p>New member <a  (click)="signUp()" style="color:blue;">Sign up now!</a></p>
+      </div>
+
+    <ion-fab class = "btn" vertical="bottom" horizontal="end" style="margin-bottom: -100px;">
+      <ion-fab-button  (click)="login()">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+  </form>
+</div>
+
+  </ion-col>
+  </ion-row>
+</ion-content>
+
+
+<div *ngIf="!internetStatus" class="no-internet-message">
+  <div class="center-card">
+    <div class="cards">
+      <div class="header">
+        <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" stroke-linejoin="round" stroke-linecap="round"></path>
+                  </svg></div>
+        <div class="content">
+           <span class="title">No Internet</span>
+           <p class="message">Failed to load events due to network issues. Make sure that you are connected to the internet. Try again.</p>
+        </div>
+         <div class="actions">
+           <button class="cancel" type="button" (click) = "retry()">Retry</button>
+        </div>
+      </div>
+      </div>
+    </div>
+</div>

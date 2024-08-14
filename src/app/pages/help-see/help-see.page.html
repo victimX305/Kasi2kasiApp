@@ -1,0 +1,38 @@
+<!-- help-see.page.html -->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="custom-blue-title">{{ user.fullname }} Details</ion-title>
+        <ion-buttons class="--ion-justify-content-end" (click)="closeModal()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding centered-container">
+  <!-- Display user details -->
+  <div class="form-container">
+    <div class="form">
+      <div class="form-group">
+        <label>Email</label>
+        <ion-input [(ngModel)]="user.email" disabled></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label>Fullname</label>
+        <ion-input [(ngModel)]="user.fullname" disabled></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label>Message</label>
+        <div *ngFor="let message of user.messages"></div>
+        <ion-textarea [(ngModel)]="user.messages" disabled></ion-textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Reply</label>
+      <ion-textarea [(ngModel)]="replyMessage" placeholder="Type your reply here..."></ion-textarea>
+      <ion-button (click)="sendReply()">Send Reply</ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,54 @@
+/* Assuming this is your global stylesheet (styles.css) */
+.logo-container {
+  display: flex;
+  align-items: center;
+  
+}
+
+.icon-image {
+ /* Adjust this value to make the image smaller */
+  /* Adjust this value to make the image smaller */
+  margin-top: -55px;
+  margin-right: 20px;
+  font-size: 40px;
+}
+
+/* Assuming this is your global stylesheet (styles.css) */
+.ion-title {
+  line-height: 20px; /* Adjust this value to control the vertical alignment */
+  margin-top: 10px;
+}
+
+/* Assuming this is your global stylesheet (styles.css) */
+ion-toolbar {
+  height: 100px; /* Adjust this value to control the header's height */
+}
+
+.ion-date{
+  height: 10px;
+}
+
+.btn-cancel{
+  width: 45%;
+  margin-left: 20px;
+  
+}
+.btn-next{
+  width: 45%;
+  margin-right: 10px;
+}
+
+
+.icon-ion{
+margin-top: 30px;
+}
+
+.smaller-header {
+font-size: 16px; /* Adjust the font size to make the title smaller */
+height: 40px; /* Adjust the height to make the header shorter */
+padding: 1px; /* Adjust the padding to control the spacing */
+}
+
+.custom-blue-title {
+color: rgb(63, 131, 233);
+}

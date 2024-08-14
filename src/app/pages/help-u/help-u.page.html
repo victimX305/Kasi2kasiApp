@@ -1,0 +1,48 @@
+<ion-header class="container3">
+  <ion-toolbar class="smaller-header">
+    <ion-title class="custom-blue-title">Help</ion-title>
+    <ion-buttons class="--ion-justify-content-end" (click)="navigateToHome()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+  <div>
+    <img src="assets/LOGOv2.0.png" alt="Logo" class="logo-image small-image centered-logo">
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="form-container">
+      <form class="form" (submit)="sendMessage()">
+        <div class="form-group">
+          <label for="fullname">Fullname</label>
+          <input type="text" id="fullname" name="fullname" [(ngModel)]="fullname" readonly>
+        </div>
+        <div class="form-group">
+          <label for="replies">Replies from admin</label>
+          <div *ngIf="replies && replies.length > 0; else noReplies" name="replies" readonly>
+            <div *ngFor="let reply of replies">  
+                  <p>{{ reply.reply }}</p>
+                  <small>{{ reply.timestamp?.toDate() | date: 'short' }}</small> 
+            </div>
+          </div>
+          <ng-template #noReplies>
+            <p>No replies yet</p>
+          </ng-template>
+        </div>
+        <div class="form-group">
+          <label for="textarea">How Can We Help You?</label>
+          <textarea name="textarea" id="textarea" rows="10" cols="50" required [(ngModel)]="message"></textarea>
+        </div>
+        <button class="form-submit-btn" type="submit" (click)="navigateToHome()" >Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <ion-footer>
+    <div class="container2">
+      <h4 style="font-weight: bold; color: black;">KASI2KASI</h4>
+      <p style="font-weight: lighter; font-size: smaller; text-align: center;color: rgb(11, 12, 12);">@ 2023 Designed by ALLiNiT |All RightS Reserved</p>
+    </div>
+  </ion-footer>
+</ion-content>

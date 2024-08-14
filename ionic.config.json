@@ -1,0 +1,7 @@
+{
+  "name": "kasi-2-kasi-app1",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

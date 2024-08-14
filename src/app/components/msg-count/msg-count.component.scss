@@ -1,0 +1,29 @@
+/* chat.component.scss */
+
+.message-count {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  margin-right:20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.count-badge {
+  background-color: red; /* Change the background color as needed */
+  color: #ffffff; /* Change the text color as needed */
+  border-radius: 50%;
+  padding: 8px;
+  min-width: 24px;
+  min-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+/* Optional: Add animation for a subtle effect */
+.message-count:hover .count-badge {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
+}

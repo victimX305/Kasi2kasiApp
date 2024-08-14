@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Verify Artists And Organizer</ion-title>
+    <ion-buttons class="--ion-justify-content-end" (click)="navigateToHome()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Check if there are unverifiedUsers -->
+  <ng-container *ngIf="unverifiedUsers && unverifiedUsers.length > 0; else noUsersMessage">
+    <ion-list *ngFor="let user of unverifiedUsers">
+      <ion-item>
+        <ion-label>{{ user.fullname }}</ion-label>
+        <ion-button (click)="openUserModal(user)">View</ion-button>
+        <ion-button [routerLink]="['/admin-message', { uid: user.uid }]">Feedback</ion-button>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <!-- Display message when no unverifiedUsers are available -->
+  <ng-template #noUsersMessage>
+    <div class="no-users-message">
+      <p>No unverified artists available.</p>
+      <!-- You can customize this message as needed -->
+    </div>
+  </ng-template>
+</ion-content>

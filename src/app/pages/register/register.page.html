@@ -1,0 +1,88 @@
+<ion-content [fullscreen]="true">
+  <div class="logo-container">
+    <ion-item>
+      <ion-img src="assets/LOGO.png" class="logo"></ion-img>
+    </ion-item>
+  </div>
+  <div class="header">
+    <h4 title="header">Welcome</h4>
+    <p>Register account</p>
+  </div>
+
+  <form #signupForm="ngForm">
+    <div class="ion-padding">
+      
+      <ion-item class="input">
+        
+        <ion-input  name="name" [(ngModel)]="basicInfor.fullname" required position="floating" type="text">Fullname</ion-input>
+        <ion-icon name="person" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item class="input">
+       
+        <ion-input  name="email" [(ngModel)]="basicInfor.email" requiredionic  position="floating" type="email">Email</ion-input>
+        <ion-icon name="mail" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item class="input">
+        <ion-input name="phoneNumber" [(ngModel)]="basicInfor.phonenumber" position="floating" type="text">Phonenumber</ion-input>
+
+        <ion-icon name="call" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item class="input">
+        
+        <ion-input   name="Password" type="password" [(ngModel)]="basicInfor.password"  required position="floating">Password</ion-input>
+        <ion-icon name="lock-closed" slot="end"></ion-icon>
+      </ion-item>
+      
+      <ion-item class="input">
+        <ion-input  name="confirmPassword" type="password"  required position="floating">ConfirmPassword</ion-input>
+        <ion-icon name="lock-closed" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item class="input">
+        <ion-input  name="Province" [(ngModel)]="basicInfor.province" position="floating" required type="text">Province</ion-input>
+        <ion-icon name="location" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item class="input">
+        <ion-label>Registration Type</ion-label>
+        <ion-radio-group [(ngModel)]="registrationType" (ionChange)="updateRegistrationType()" [ngModelOptions]="{standalone: true}">
+          <ion-item>
+            <ion-radio value="partner">Partner</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio value="client">Client</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-radio value="guest">Guest</ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-item>
+      
+      <ion-item class="input" *ngIf="registrationType === 'partner'">
+        <ion-button (click)="isEventOrganizer = true; onSignup()">
+          Are you an event organizer? Click here
+        </ion-button>
+      </ion-item>
+
+      <ion-item class="input" *ngIf="registrationType === 'guest'">
+        <ion-button (click)="isGuest = true; onSignup()">
+          Are you a guest? Click here
+        </ion-button>
+      </ion-item>
+
+      <ion-item class="input" *ngIf="registrationType === 'client'">
+        <ion-button (click)="onSignup()">
+          Sign-Up
+        </ion-button>
+      </ion-item>
+
+      <ion-item class="input">
+        <p>Already a member? <a [routerLink]="['/login']">login now!</a></p>
+
+      </ion-item>
+    </div>
+  </form>
+</ion-content>

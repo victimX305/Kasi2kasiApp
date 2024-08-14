@@ -1,0 +1,60 @@
+chatting css
+
+ion-item{
+    --background: transparent;
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --ion-safe-area-left: 0px;
+    --nin-height: 32px;
+    --border-width: 0;
+
+    ion-label{
+        position: relative;
+        border-radius: 12px;
+        padding: 4px 8px;
+        margin-top: 12px;
+        max-width: 78%;
+    }
+}
+ion-footer{
+    ion-toolbar{
+        padding: 0 3px;
+        ion-textarea{
+            border: 1px solid var(--ion-color-medium);
+            border-radius: 20px;
+            margin: 0.5vh;
+        }
+    }
+}
+ion-content {
+    --background: none;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-container {
+    flex: 1;
+    overflow-y: auto;
+    z-index: 1; /* Ensure messages appear above the background */
+  }
+  
+  .chat-message {
+    background-color: transparent; /* Semi-transparent background for messages */
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 10px;
+  }
+  
+  ion-footer {
+    z-index: 2; /* Ensure footer appears above the background */
+    
+  }
+  .back{
+    background-color: transparent;
+  }
+  .check{
+    background-color: black;
+  }
+  .large-icon {
+    font-size: 3em;
+  }

@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/chats"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{fullname}}</ion-title>
+    <ion-buttons slot="end">
+      <!-- Change the settings icon to vertical ellipsis -->
+      <ion-button id="popoverTrigger">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- Popover for settings menu -->
+    <ion-popover trigger="popoverTrigger" triggerAction="click" #popover>
+      <ng-template>
+        <ion-list>
+          <ion-item (click)="handlePopoverClick('chat')">
+            <ion-icon name ="image-outline" slot="start"></ion-icon>
+            <ion-label>Wallpaper</ion-label>
+          </ion-item>
+          
+        </ion-list>
+      </ng-template>
+    </ion-popover>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [ngStyle]="{'background-image': 'url(' + wallpaperUrl + ')', 'background-size': 'cover', 'background-repeat': 'no-repeat', 'background-position': 'center center'}">
+  <div class="chat-container">
+    <app-empty-screen *ngIf="(chats | async)?.length == 0" [model]="model"></app-empty-screen>
+
+    <ng-container *ngIf="(chats | async) as chat$">
+      <ion-list class="back" lines="none" *ngIf="chat$?.length > 0">
+        <ion-item-group class="chats-group" *ngFor="let chat of chat$">
+          <app-chat-box [chat]="chat" [current_user_id]="chatingService.currentUserId" class="chat-message"></app-chat-box>
+        </ion-item-group>
+      </ion-list>
+    </ng-container>
+  </div>
+</ion-content>
+
+<div>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-textarea
+        autoGrow
+        rows="1"
+        placeholder="send message"
+        class="ion-text-center"
+        [(ngModel)]="message"
+        (keydown.enter)="sendMessageInComponent($event)">
+      </ion-textarea>
+      <ion-buttons slot="end">
+        <!-- Camera Icon Button with custom CSS class -->
+        <ion-button size="small" color="primary" (click)="fileInput.click()">
+          <ion-icon name="camera" class="large-icon"></ion-icon>
+        </ion-button>
+        <input type="file" #fileInput accept="image/*" style="display: none;" (change)="onFileSelected($event)">
+        
+        <!-- Send Message Button -->
+        <ion-fab-button size="small" color="primary" [disabled]="!message" (click)="sendMessageInComponent()">
+          <ion-icon name="send"></ion-icon>
+        </ion-fab-button>
+        
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>

@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Help Messages</ion-title>
+    <ion-buttons class="--ion-justify-content-end" (click)="navigateToHome()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Check if there are helpMessage items -->
+  <ng-container *ngIf="groupedMessages && getGroupedMessagesKeys().length > 0; else noHelpMessages">
+    <ion-list *ngFor="let email of getGroupedMessagesKeys()">
+      <ion-item>
+        <ion-label>{{ groupedMessages[email].fullname }}</ion-label>
+        <ion-button (click)="openUserModal(groupedMessages[email])">View</ion-button>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <!-- Display message when no helpMessage items are available -->
+  <ng-template #noHelpMessages>
+    <div class="no-help-messages">
+      <p>No help messages available.</p>
+      <!-- You can customize this message as needed -->
+    </div>
+  </ng-template>
+</ion-content>

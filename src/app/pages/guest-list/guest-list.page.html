@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Select Guests</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirmSelection()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar show-clear-button="never" [(ngModel)]="searchText" (ionInput)="filterArtists()"></ion-searchbar>
+
+  <div *ngIf="showNoMatchesMessage && filteredGuests.length === 0" class="no-matches">
+    No matching artists found.
+  </div>
+
+
+<div *ngFor="let artist of filteredGuests">
+  <ion-item>
+      <ion-avatar class="thumbnail" >
+      <img [src]="artist.proPic" alt="{{ artist.name }}">
+    </ion-avatar>
+    <ion-label>{{ artist.StageName }}</ion-label>
+    <ion-checkbox [(ngModel)]="artist.selected"></ion-checkbox>
+  </ion-item>
+</div>
+
+</ion-content>
+
+

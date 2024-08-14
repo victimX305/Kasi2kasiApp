@@ -1,0 +1,26 @@
+<ion-item [class]="chat.sender !== current_user_id ? 'sender' : 'user'">
+  <div>
+  <ng-container *ngIf="isNewDayFlag">
+    <div class="date-divider">
+      {{ chat.createdAt?.toDate() | date: 'EEEE, MMM d, y' }}
+    </div>
+  </ng-container>
+  </div>
+
+  <ion-label [slot]="chat.sender === current_user_id ? 'end' : 'start'" class="ion-text-wrap message-container">
+    <!-- Display Image or Text based on message type -->
+    <div *ngIf="chat.type === 'image'; else textMessage">
+      <img [src]="chat.message" alt="Image" style="max-width: 100%; border-radius: 10px;" (click)="viewImage(chat.message)">
+    </div>
+    <ng-template #textMessage>
+      <ion-text>
+        {{ chat.message }}
+      </ion-text>
+    </ng-template>
+
+    <ion-note>
+      <small>{{ chat.createdAt?.toDate() | date: 'HH:mm' }}</small>
+      <ion-icon [color]="chat.sender === current_user_id ? 'light' : 'primary'" name="checkmark-done-outline"></ion-icon>
+    </ion-note>
+  </ion-label>
+</ion-item>

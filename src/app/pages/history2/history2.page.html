@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-buttons slot="start" class="logo-container">
+      <img src="assets/LOGO.png" alt="Logo" class="logo-image" [routerLink]="['/home-event-guest']">
+    </ion-buttons>
+    <ion-buttons class="up" (click)="navigateToHome()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-header>
+  <ion-card-title>Bookings History</ion-card-title>
+  </ion-card-header>
+  
+  <ion-searchbar show-clear-button="never" [(ngModel)]="searchText" (input)="filterEvents()"></ion-searchbar>
+  
+  <div *ngIf="showNoMatchesMessage && filteredEvents.length === 0 && !noEventsMessage" class="no-matches">
+    No matching events found.
+  </div>
+  
+  
+  <ion-card-content> 
+  <ng-container *ngIf="events.length > 0; else noEventsMessage">
+  <ion-list *ngFor="let event of filteredEvents" class="card">
+    <ion-item *ngIf="event.posterUrl && event.title && event.startDate && event.eventType">
+      <ion-thumbnail slot="start">
+        <img [src]="event.posterUrl" />
+      </ion-thumbnail>
+      <ion-label>{{ event.title }}</ion-label>
+      <ion-button (click)="openEventDetails(event)">View</ion-button>
+    </ion-item>
+  </ion-list>
+  </ng-container>
+  
+  <ng-template #noEventsMessage>
+    <div class="no-events-message">
+      <p>No booking history available at the moment.</p>
+    </div>
+  </ng-template>
+  
+  </ion-card-content>
+  
+  
+  
+  </ion-content>

@@ -1,0 +1,99 @@
+<ion-content [fullscreen]="true">
+  <ion-spinner class="ion-text-center" name="crescent" *ngIf="isLoading"></ion-spinner>
+  <div class="circleBase type2 circle1"></div>
+  <div class="circleBase type1"></div>
+  <div class="circleBase type2 circle2"></div>
+
+  <ion-label class="welcomeMessage">
+    <ion-text color="light">Hello,</ion-text> 
+    <ion-text color="white">
+      <p  style="color:white">Sign Up!</p>
+    </ion-text>
+  </ion-label> 
+
+  <ion-icon 
+    name="arrow-back-outline" 
+    style="color:white"
+    class="backButton"
+    routerLink="/chat-login">
+  </ion-icon>
+
+  <form  #signupForm="ngForm">
+    <ion-list lines="none" class="ion-margin ion-padding ion-text-center">
+      <!-- Full Name -->
+      <ion-item class="ion-margin-vertical">
+        <ion-icon name="person-outline" slot="end" color="medium"></ion-icon>
+        <ion-input name="fullname" placeholder="Enter Full Name" [(ngModel)]="basicInfor.fullname"></ion-input>
+      </ion-item>
+      
+    
+      <!-- Email -->
+      <ion-item class="ion-margin-vertical">
+        <ion-icon name="mail-outline" slot="end" color="medium"></ion-icon>
+        <ion-input name="email" placeholder="Enter Email Address"  [(ngModel)]="basicInfor.email"></ion-input>
+      </ion-item>
+      
+    
+      <!-- Phone Number -->
+      <ion-item class="ion-margin-vertical">
+        <ion-icon name="call-outline" slot="end" color="medium"></ion-icon>
+        <ion-input name="phonenumber" placeholder="Enter Phone Number"  [(ngModel)]="basicInfor.phonenumber"></ion-input>
+      </ion-item>
+      
+    
+      <!-- Password -->
+      <ion-item class="ion-margin-vertical">
+        <ion-icon (click)="togglePasswordVisibility()" name="eye" slot="end" color="medium"></ion-icon>
+        <ion-input name="password" [type]="isTypePassword ? 'password' : 'text'" placeholder="Enter Password"  [(ngModel)]="basicInfor.password"></ion-input>
+      </ion-item>
+     
+    
+      <!-- Confirm Password -->
+      <ion-item class="ion-margin-vertical">
+        <ion-icon (click)="togglePasswordVisibility()" name="eye" slot="end" color="medium"></ion-icon>
+        <ion-input name="confirmpassword" [type]="isTypePassword ? 'password' : 'text'" placeholder="Confirm Password"></ion-input>
+      </ion-item>
+      
+    
+      <!-- Province -->
+      <ion-item class="ion-margin-vertical">
+        <ion-icon name="location-outline" slot="end" color="medium"></ion-icon>
+        <ion-input name="province" placeholder="Enter Province"  [(ngModel)]="basicInfor.province"></ion-input>
+      </ion-item>
+     
+    
+      <!-- Registration Type -->
+      <ion-item class="ion-margin-vertical" >
+        <ion-label ></ion-label>
+        <ion-select placeholder = "Select Registration Type"   [(ngModel)]="registrationType" (ionChange)="updateRegistrationType()" [ngModelOptions]="{standalone: true}"   >
+          <ion-select-option value="partner">Partner</ion-select-option>
+          <ion-select-option value="client">Client</ion-select-option>
+          <ion-select-option value="guest">Guest</ion-select-option>
+        </ion-select>
+      </ion-item>
+     
+
+      
+    
+
+      <ion-row class="ion-margin-vertical">
+        <ion-col size="12" class="alignItems">
+          <div align=left>
+            <ion-checkbox></ion-checkbox>
+            <ion-note>I accept the policy and terms</ion-note>
+          </div>
+        </ion-col>
+      </ion-row>
+      
+      <ion-button class="input" *ngIf="registrationType === 'partner'" color="primary" shape="round" (click)="isGuest = true; onSignup()">Login as Organiser</ion-button>
+
+      
+      
+      <ion-button class="input" *ngIf="registrationType === 'guest'" color="primary" shape="round" (click)="isEventOrganizer = true; onSignup()">Login as a Guest</ion-button>
+
+    
+
+      <ion-button class="input" *ngIf="registrationType === 'client'" color="primary" shape="round" (click)="onSignup()">Sign Up</ion-button>
+    </ion-list>
+  </form>
+</ion-content>

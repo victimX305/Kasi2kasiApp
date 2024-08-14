@@ -1,0 +1,66 @@
+<ion-menu *ngIf="internetStatus"contentId="main-content" slot="end">
+  <ion-menu-toggle auto-hide="false" [routerLink]="['/login']">
+    <ion-item>
+      <ion-icon slot="start" name="log-out"></ion-icon>
+      <ion-label>Logout</ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+</ion-menu>
+
+<ion-header *ngIf="internetStatus"[translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Admin</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="internetStatus" id="main-content"> 
+  <ion-card (click)="navigateToAdminVerification()">
+    <ion-card-content>
+      <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+      Organizer Verification
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card (click)="navigateToGuestVerification()" >
+    <ion-card-content>
+      <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+      Guests Verification
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card (click)="navigateToGuestEventVerification()" >
+    <ion-card-content>
+      <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+      Artist And EventOrganizer Verification
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card (click)="navigateToHelpMessage()" >
+    <ion-card-content>
+      <ion-icon slot="start" name="help-outline"></ion-icon>
+      Feedback From Users
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<div *ngIf="!internetStatus" class="no-internet-message">
+  <div class="center-card">
+    <div class="cards">
+      <div class="header">
+        <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" stroke-linejoin="round" stroke-linecap="round"></path>
+                  </svg></div>
+        <div class="content">
+           <span class="title">No Internet</span>
+           <p class="message">Failed to load events due to network issues. Make sure that you are connected to the internet. Try again.</p>
+        </div>
+         <div class="actions">
+           <button class="cancel" type="button" (click) = "retry()">Retry</button>
+        </div>
+      </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+
+#reminder{
+    margin-left: 10px;
+    
+    
+    }
+    
+    #chat{
+    margin-left: 15px;
+    
+    }
+    
+    #del{
+      margin-left: 15px;
+      
+      }
+    
+    .icons {
+        display: inline-block; /* To align the icons on the same line */
+        cursor: pointer; /* Add a pointer cursor for a clickable feel */
+        font-size: 30px;
+    
+      }
+      
+      .icons.active {
+        color: rgb(40, 148, 7)(0, 255, 157); /* Change the color when clicked (you can use your preferred color) */
+      }
+      
+      .post{
+        height: 50%; 
+        width: 100%; 
+        }

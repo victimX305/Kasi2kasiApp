@@ -1,0 +1,220 @@
+<ion-header>
+  <ion-toolbar class="smaller-header">
+    <ion-title class="custom-blue-title">Create an Event</ion-title>
+    <ion-buttons class="--ion-justify-content-end" (click)="navigateToHome()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <div>
+    <div >
+      <div>
+        <ion-row class = "ion-justify-content-center">
+          <ion-col size = "12" sizeMd = "8" sizeLg="6" sizeXl="4">
+        <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+         
+          <ion-item>
+            <!--<ion-label position="floating">Event Title</ion-label>-->
+            <ion-input label="Event Title:" formControlName = "title" position="floating"  [(ngModel)] = "event.title"></ion-input> 
+            <ion-icon name="clipboard" slot = "end" class = "icon-ion"></ion-icon> 
+  
+               </ion-item>
+               <ion-text color="danger" *ngIf="myForm.get('title')?.hasError('required') && (myForm.get('title')?.touched || myForm.get('title')?.dirty)">
+                Input cannot be empty.
+              </ion-text>
+              <ion-text color="danger" *ngIf="myForm.get('title')?.hasError('alphabetic') && (myForm.get('title')?.touched || myForm.get('title')?.dirty)">
+                Title must contain only alphabetic characters.
+              </ion-text>
+
+              <ion-item>
+                <div class="grid w-full max-w-xs items-center gap-1.5">
+                  <label class="text-sm text-gray-400 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    Poster
+                  </label>
+                  <br>
+                  <input
+                    id="picture"
+                    type="file"
+                    class="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"
+                    accept=".jpg,.png,.jpeg"
+                    (change)="onFileChange($event, 'posterUrl')"
+                    formControlName = "posterUrl"
+              
+                  >
+                </div>
+              </ion-item>
+              
+              <ion-text color="danger" *ngIf="myForm.get('posterUrl')?.hasError('requiredFileSelected') && (myForm.get('posterUrl')?.touched || myForm.get('posterUrl')?.dirty)">
+                Please select a file.
+              </ion-text>
+  
+      <ion-item>
+        <ion-select label="All Events:" formControlName = "eventType" [(ngModel)] = "event.eventType" >
+          <ion-select-option value="Birthday Celebration">Birthday Celebration</ion-select-option>
+          <ion-select-option value="Business Event">Business Event</ion-select-option>
+          <ion-select-option value="Community Meetings">Community Meetings</ion-select-option>
+          <ion-select-option value="Concerts">Concerts</ion-select-option>
+          <ion-select-option value="Exhibitions">Exhibitions</ion-select-option>
+          <ion-select-option value="House Party">House Party</ion-select-option>
+          <ion-select-option value="Lounge Event">Lounge Event</ion-select-option>
+          <ion-select-option value="Peforming Arts">Peforming Arts</ion-select-option>
+          <ion-select-option value="Poetry">Poetry</ion-select-option>
+          <ion-select-option value="Sports & Outdoor">Sports & Outdoor</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="myForm.get('eventType')?.hasError('required') && (myForm.get('eventType')?.touched || myForm.get('eventType')?.dirty)">
+        Please select an option.
+      </ion-text>
+      
+      <ion-item>
+        <ion-input label="Phone Number:" formControlName ="phoneNumber"  [(ngModel)] = "event.phoneNumber" ></ion-input>
+        <ion-icon name="call" slot = "end" class = "icon-ion"></ion-icon>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="myForm.get('phoneNumber')?.hasError('required') && (myForm.get('phoneNumber')?.touched || myForm.get('phoneNumber')?.dirty)">
+        Input cannot be empty.
+      </ion-text>
+      <ion-text color="danger" *ngIf="myForm.get('phoneNumber')?.hasError('numeric') && (myForm.get('phoneNumber')?.touched || myForm.get('phoneNumber')?.dirty)">
+        Phone number must contain only numeric characters.
+      </ion-text>
+      <ion-text color="danger" *ngIf="myForm.get('phoneNumber')?.hasError('invalidPhoneNumber') && (myForm.get('phoneNumber')?.touched || myForm.get('phoneNumber')?.dirty)">
+        Phone number must contain exactly 10 digits.
+      </ion-text>
+      
+<br>
+<ion-item>
+  
+        <br>
+        <ion-select label = "Select type of event:"  formControlName = "eventFormat"  [(ngModel)] = "event.eventFormat">
+          <ion-select-option value="Venue">Venue</ion-select-option>
+          <ion-select-option value="Online Event">Online Event</ion-select-option>
+          <ion-select-option value="Hybrid Event">Hybrid Event</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="myForm.get('eventFormat')?.hasError('required') && (myForm.get('eventFormat')?.touched || myForm.get('eventFormat')?.dirty)">
+        Please select an option.
+      </ion-text>
+
+      <ion-item *ngIf="event.eventFormat === 'Online Event' || event.eventFormat === 'Hybrid Event'">
+        <ion-label>Enter online event link:</ion-label>
+        <ion-input type="text" formControlName = "onlineEventLink" [(ngModel)]="event.onlineEventLink"></ion-input>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="myForm.get('onlineEventLink')?.hasError('required') && (myForm.get('onlineEventLink')?.touched || myForm.get('onlineEventLink')?.dirty)">
+        Input cannot be empty.
+      </ion-text>
+      
+
+<ion-button *ngIf="event.eventFormat !== 'Online Event'" (click)="openLocation()" shape="round" expand="block">Click to select location.</ion-button>
+
+<!-- Display selected location details-->
+<div *ngIf = "event.eventFormat !== 'Online Event'">
+<div *ngIf="selectedLocation" >
+  <h2>Selected Location Details</h2>
+  <ion-item>
+    <ion-label>Address Line 1:</ion-label>
+    <ion-text>{{ selectedLocation.AddressLine1 }}</ion-text>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Address Line 2:</ion-label>
+    <ion-text>{{ selectedLocation.AddressLine2 }}</ion-text>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Province:</ion-label>
+    <ion-input readonly="true" >{{selectedLocation.selectedProvince?.name}}</ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>District:</ion-label>
+    <ion-input [value]="selectedLocation.selectedDistrict?.name"  readonly="true"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Municipality:</ion-label>
+    <ion-input [value]="selectedLocation.selectedMunicipality?.name"  readonly="true"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>City:</ion-label>
+    <ion-input [value]="selectedLocation.selectedCity?.names"  readonly="true"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Suburb:</ion-label>
+    <ion-input [value]="selectedLocation.selectedSurburb?.name"  readonly="true"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Ward:</ion-label>
+    <ion-input [value]="selectedLocation.selectedWard?.name"  readonly="true"></ion-input>
+  </ion-item>
+  
+</div>
+</div>
+<!-- ...other form elements... -->
+
+<ion-item>
+  <ion-label >Start Date & Time</ion-label>
+  <ion-datetime-button datetime="datetimes"  ></ion-datetime-button>
+
+<ion-modal [keepContentsMounted]="true">
+<ng-template>
+<ion-datetime id="datetimes" [(ngModel)]="event.startDate" [ngModelOptions]="{standalone: true}" [min]="minDate"></ion-datetime>
+</ng-template>
+</ion-modal>
+</ion-item>
+
+<ion-item>
+ 
+  <ion-label >End Date & Time</ion-label>
+  <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+<ion-modal [keepContentsMounted]="true">
+<ng-template>
+<ion-datetime id="datetime"  [(ngModel)]="event.endDate" [ngModelOptions]="{standalone: true}" [min]="minDate"></ion-datetime>
+
+</ng-template>
+</ion-modal>
+
+</ion-item>
+           
+
+      <ion-item>
+        <ion-input label="Add Hashtag" formControlName = "hashtags"  [(ngModel)]="event.hashtags" formControlName = "hashtags"></ion-input>
+        <ion-icon name="megaphone" slot = "end" class = "icon-ion"></ion-icon>
+     </ion-item>
+
+     <ion-text color="danger" *ngIf="myForm.get('phoneNumber')?.hasError('required') && (myForm.get('phoneNumber')?.touched || myForm.get('phoneNumber')?.dirty)">
+      Input cannot be empty.
+    </ion-text>
+
+
+    <ion-textarea [(ngModel)]="event.eventDescription" [ngModelOptions]="{standalone: true}"  placeholder="Add event description for the event if there is any."></ion-textarea>     
+     
+     <br>
+
+     <ion-button (click)="openModal()" shape = "round" expand="block">Click to select guests.</ion-button>
+     
+     <ion-textarea [(ngModel)]="selectedGuestsText" formControlName="selectedGuestsText" placeholder="Selected Guests" readonly></ion-textarea>
+     <ion-text color="danger" *ngIf="myForm.get('selectedGuestsText')?.hasError('required') && (myForm.get('selectedGuestsText')?.touched || myForm.get('selectedGuestsText')?.dirty)">
+      Please make you have selected the guests.
+    </ion-text>      
+     
+     <div class = "buttons">
+     <ion-button  shape ="round" [routerLink]="['/home-event-guest']"  class = "btn-cancel">Cancel</ion-button>
+     <ion-button  shape ="round"  class = "btn-next" type ="submit">Submit</ion-button>
+      </div>
+    
+    </form>
+  </ion-col>
+</ion-row>
+    </div>
+    </div>
+    </div>
+</ion-content>

@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Aa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Aa</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content  id="main-content"> 
+    <ion-card (click)="navigateToAdminVerification()">
+      <ion-card-content>
+        <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+        Organizer Verification
+      </ion-card-content>
+    </ion-card>
+    <br>
+    <ion-card (click)="navigateToEventManage()">
+      <ion-card-content>
+        <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+        Events
+      </ion-card-content>
+    </ion-card>
+</ion-content>

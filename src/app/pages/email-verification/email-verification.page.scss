@@ -1,0 +1,166 @@
+ /* Center-align the input container */
+ .center-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh; 
+    color: rgba(204, 204, 204, 0);/* Optional: This will center it vertically in the viewport */
+  }
+  /* Input container */
+.input-container {
+  position: relative;
+  margin: 10px 0;
+  padding-left: 20px;
+  
+}
+
+/* Input field */
+.input-field {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  background-color: transparent;
+  color: black;
+}
+
+/* Input label */
+.input-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 16px;
+  color: rgba(10, 9, 9, 0);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+/* Input highlight */
+.input-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background-color: #007bff;
+  transition: all 0.3s ease;
+}
+
+/* Input field:focus styles */
+.input-field:focus + .input-label {
+  top: -20px;
+  font-size: 12px;
+  color: #007bff;
+}
+
+.input-field:focus + .input-label + .input-highlight {
+  width: 100%;
+}
+
+
+.input{
+    font-size:300;
+
+}
+ ion-item{
+    --background:'#f1f1f1';
+    border-radius: 10px;
+    margin-bottom: 16px;
+ 
+ }
+
+ .header{
+    margin-top: 50px;
+    margin-bottom: 80px;
+    text-align: center;
+    .subTitle{
+        color:grey;
+        font-size: 0.9rem;
+    }
+    title{
+        font-size: 2rem;
+    }
+
+ }
+
+ .signupLink{
+    display: flex;
+    margin: auto;
+    flex-direction: row;
+    align-content: center;
+    position: absolute;
+    justify-content: center;
+    left: 0;
+    bottom: 0;
+    width: 80%;
+    right: 0;
+
+    
+    p{
+        font-size: 0.9rem;
+    }
+    a{
+        text-decoration: none;
+    }
+ }
+
+ .forgotpassword{
+    display: flex;
+    justify-content: flex-end;
+    a{
+        font-weight: 400;
+        font-size: 0.8rem;
+        text-decoration: none;
+
+    }
+ }
+
+ .logo-container {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+    height: 50px; /* Adjust the height as needed */
+  }
+  
+  .logo {
+    max-height: 180px; /* Make the logo fill the container's height */
+    width: 200px; /* Maintain the aspect ratio */
+    margin-top:35px;
+  }
+
+  .button {
+    background-color: #0e090900;
+    color: #050505fb;
+    width: 8.5em;
+    height: 2.9em;
+    border: #6d6f79 0.2em solid;
+    border-radius: 11px;
+    text-align: right;
+    transition: all 0.6s ease;
+    margin-top: 20px; /* Adjust the top margin as needed */
+  }
+
+  .button:hover {
+    background-color: #3654ff;
+    cursor: pointer;
+  }
+
+  .button svg {
+    width: 1.6em;
+    margin: -0.2em 0.8em 1em;
+    position: absolute;
+    display: flex;
+    transition: all 0.6s ease;
+  }
+
+  .button:hover svg {
+    transform: translateX(5px);
+  }
+
+  .text {
+    margin: 0 1.5em;
+  }

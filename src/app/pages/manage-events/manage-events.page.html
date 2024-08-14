@@ -1,0 +1,50 @@
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar >
+      <ion-buttons slot="start" class="logo-container">
+        <!-- Insert your logo image here -->
+        <img src="assets/LOGO.png" alt="Logo" class="logo-image" [routerLink]="['/event-org-home']">
+      </ion-buttons>
+
+      <ion-buttons class="up" (click)="navigateToHome()" slot="end">
+        <ion-icon name="close"></ion-icon>
+      </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+
+
+ 
+  <ion-content [fullscreen]="true">
+    <ion-card-header>
+      <ion-card-title>Manage Events</ion-card-title>
+    </ion-card-header>
+
+    <ion-searchbar show-clear-button="never" [(ngModel)]="searchText" (input)="filterEvents()"></ion-searchbar>
+
+<div *ngIf="showNoMatchesMessage && filteredEvents.length === 0 && !noEventsMessage " class="no-matches">
+No matching events found.
+</div>
+
+<div class="ion-padding">
+  <ion-card-content>
+    <ng-container *ngIf="events.length > 0; else noEventsMessage">
+      <ion-list *ngFor="let event of filteredEvents" class="card">
+        <ion-item *ngIf="event.posterUrl && event.title && event.startDate && event.eventType">
+          <ion-thumbnail slot="start">
+            <img [src]="event.posterUrl" />
+          </ion-thumbnail>
+        <ion-label>{{ event.title }}</ion-label>
+        <ion-icon slot ="end" name="create" (click)="editEvent(event)"></ion-icon>
+        <ion-icon slot ="end" (click)="deleteEvent(event)" name="trash"></ion-icon>   
+      </ion-item>
+    </ion-list>
+  </ng-container>
+    <ng-template #noEventsMessage>
+      <p>No events available at the moment. Create a new one.</p>
+    </ng-template>
+  </ion-card-content>
+</div>
+</ion-content>
+
+ 

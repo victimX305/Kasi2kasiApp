@@ -1,0 +1,46 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {  
+   // Allow read and write access to the user's own document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Allow read and write access to the 'users' collection
+     match /users/{userId} {
+      allow read, write: if request.auth != null
+        && (request.resource.data.password is string && request.resource.data.password.size() >= 6);
+    }
+    
+    // Allow read and write access to the 'event_organizers' collection
+    match /event_organizers/{organizerId} {
+      allow read, write: if request.auth != null
+        && (request.resource.data.password is string && request.resource.data.password.size() >= 6);
+    }
+        match /chatRooms/{chatRoomId} {
+      allow read: if true;  // All users can read chat rooms
+      allow create: if true;  // All users can create new chat rooms
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.ownerUid;  // Only the owner can update/delete
+      }
+      
+    
+     // Add password reset rule here for both users and organizers
+    match /password_reset_requests/{document=**} {
+      allow create: if (request.resource.data.newPassword is string
+        && request.resource.data.newPassword.size() >= 6);
+    }
+    // This rule allows anyone with your Firestore database reference to view, edit,
+    // and delete all data in your Firestore database. It is useful for getting
+    // started, but it is configured to expire after 30 days because it
+    // leaves your app open to attackers. At that time, all client
+    // requests to your Firestore database will be denied.
+    //
+    // Make sure to write security rules for your app before that time, or else
+    // all client requests to your Firestore database will be denied until you Update
+    // your rules
+    match /{document=**} {
+      allow read, write: if request.time < timestamp.date(2024, 9, 24);
+    }
+  }
+  }

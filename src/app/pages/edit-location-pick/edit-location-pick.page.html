@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Edit Location</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveLocation()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Province</ion-label>
+    <ion-input [(ngModel)]="selectedProvince" [ngModelOptions]="{standalone: true}"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>District</ion-label>
+    <ion-input [(ngModel)]="selectedDistrict" [ngModelOptions]="{standalone: true}"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Municipality</ion-label>
+    <ion-input [(ngModel)]="selectedMunicipality" [ngModelOptions]="{standalone: true}"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>City</ion-label>
+    <ion-input [(ngModel)]="selectedCity" [ngModelOptions]="{standalone: true}"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Suburb</ion-label>
+    <ion-input [(ngModel)]="selectedSurburb" [ngModelOptions]="{standalone: true}"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Ward</ion-label>
+    <ion-input [(ngModel)]="selectedWard" [ngModelOptions]="{standalone: true}"></ion-input>
+  </ion-item>
+</ion-content>

@@ -1,0 +1,179 @@
+<ion-header>
+  <ion-toolbar class="smaller-header">
+    <ion-title class="custom-blue-title">Edit Event</ion-title>
+    <ion-buttons class="--ion-justify-content-end" (click)="navigateToHome()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+    <div class="sub">
+      <h2 class="sub h2">Event Details</h2>
+    </div>
+
+        <form [formGroup]="myForm" (ngSubmit)="updateEvent()">
+
+        <ion-item>
+          <ion-input label="Event Title :" position="floating" [(ngModel)] = "event.title" [ngModelOptions]="{standalone: true}"></ion-input>
+          <ion-icon name="clipboard" slot="end" class="icon-ion"></ion-icon>
+        </ion-item>
+      
+      <ion-item>
+        <ion-select label="All Events :" [(ngModel)]="event.eventType" [ngModelOptions]="{standalone: true}">
+          <ion-select-option value="Birthday Celebration">Birthday Celebration</ion-select-option>
+          <ion-select-option value="Business Event">Business Event</ion-select-option>
+          <ion-select-option value="Community Meetings">Community Meetings</ion-select-option>
+          <ion-select-option value="Concerts">Concerts</ion-select-option>
+          <ion-select-option value="Exhibitions">Exhibitions</ion-select-option>
+          <ion-select-option value="House Party">House Party</ion-select-option>
+          <ion-select-option value="Lounge Event">Lounge Event</ion-select-option>
+          <ion-select-option value="Peforming Arts">Peforming Arts</ion-select-option>
+          <ion-select-option value="Poetry">Poetry</ion-select-option>
+          <ion-select-option value="Sports & Outdoor">Sports & Outdoor</ion-select-option>
+        </ion-select>
+      </ion-item>
+ 
+      <ion-item>
+        <ion-input label="Phone Number :" [(ngModel)]="event.phoneNumber" [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-icon name="call" slot="end" class="icon-ion"></ion-icon>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Select type of event :" [(ngModel)]="event.eventFormat" [ngModelOptions]="{standalone: true}" (ionChange)="onEventFormatChange()">
+          <ion-select-option value="Venue">Venue</ion-select-option>
+          <ion-select-option value="Online Event">Online Event</ion-select-option>
+          <ion-select-option value="Hybrid Event">Hybrid Event</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="event.eventFormat === 'Online Event' || event.eventFormat === 'Hybrid Event'">
+        <ion-label>Enter online event link:</ion-label>
+        <ion-input type="text"  [(ngModel)]="event.onlineEventLink" [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Add Hashtag :" [(ngModel)]="event.hashtags" [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-icon name="megaphone" slot="end" class="icon-ion"></ion-icon>
+      </ion-item>
+
+     <!--<ion-item>
+        <ion-label>Attach Poster :</ion-label>
+        <ion-button fill="clear" (click)="showFileInput('fileInput')">
+          <ion-icon name="attach"></ion-icon>
+        </ion-button>
+        <input type="file" accept=".pdf,.jpg,.png,.jpeg" hidden (change)="onFileChange($event, 'posterUrl')" #fileInput>
+      </ion-item>-->
+
+      <ion-item>
+        <div class="grid w-full max-w-xs items-center gap-1.5">
+          <label class="text-sm text-gray-400 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            Poster
+          </label>
+          <br>
+          <ion-input
+            id="picture"
+            type="file"
+            class="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"
+            accept=".jpg,.png,.jpeg"
+            (change)="onFileChange($event, 'posterUrl')"
+            formControlName = "posterUrl"
+          ></ion-input>
+        </div>
+      </ion-item>
+
+
+      <ion-button *ngIf="event.eventFormat !== 'Online Event'" (click)="openLocation()" shape="round" expand="block">Click to select location.</ion-button>
+
+
+     <!-- Display selected location details-->
+<div *ngIf = "event.eventFormat !== 'Online Event'">
+  <div *ngIf="selectedLocation" >
+    <h2>Selected Location Details</h2>
+    <ion-item>
+      <ion-label>Address Line 1:</ion-label>
+      <ion-text>{{ selectedLocation.AddressLine1 }}</ion-text>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Address Line 2:</ion-label>
+      <ion-text>{{ selectedLocation.AddressLine2 }}</ion-text>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Province:</ion-label>
+      <ion-input readonly="true" >{{selectedLocation.selectedProvince?.name}}</ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>District:</ion-label>
+      <ion-input [value]="selectedLocation.selectedDistrict?.name"  readonly="true"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Municipality:</ion-label>
+      <ion-input [value]="selectedLocation.selectedMunicipality?.name"  readonly="true"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>City:</ion-label>
+      <ion-input [value]="selectedLocation.selectedCity?.names"  readonly="true"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Suburb:</ion-label>
+      <ion-input [value]="selectedLocation.selectedSurburb?.name"  readonly="true"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Ward:</ion-label>
+      <ion-input [value]="selectedLocation.selectedWard?.name"  readonly="true"></ion-input>
+    </ion-item>
+    
+  </div>
+  </div>
+  <!-- ...other form elements... -->
+
+  
+       <div class="sub">
+        <h2 class="sub h2">Time Details</h2>
+      </div>
+
+
+      <ion-item>
+        <ion-label>Start Date & Time :</ion-label>
+        <ion-datetime-button datetime="datetimes"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetimes" [(ngModel)]="event.startDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>End Date & Time :</ion-label>
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime" [(ngModel)]="event.endDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+      <br>
+
+      <div class="sub">
+        <h2 class="sub h2">LineUp Details</h2>
+      </div>
+      <ion-button (click)="openModal()" shape="round" expand="block">Click to select guests.</ion-button>
+      <ion-textarea [(ngModel)]="event.selectedGuestsText" [ngModelOptions]="{standalone: true}" placeholder="Selected Guests">{{ selectedGuestsText}}</ion-textarea>
+
+      <div class="buttons">
+        <ion-button shape="round" class="btn-cancel" (click)="cancelEdit()">Cancel</ion-button>
+        <ion-button shape="round" class="btn-next" type ="submit">Edit</ion-button>
+      </div>
+
+    </form>
+   
+</ion-content>
+ 

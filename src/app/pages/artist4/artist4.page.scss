@@ -1,0 +1,21 @@
+.artist-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.thumbnail {
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+
+.thumbnail img {
+  width: 100px; /* Set a fixed width */
+  height: 100px; /* Set a fixed height */
+  object-fit: cover; /* Preserve aspect ratio and cover the container */
+  border-radius: 50%; /* Make the image round */
+}
+
+.description {
+  flex: 1;
+}

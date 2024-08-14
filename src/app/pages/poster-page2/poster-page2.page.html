@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Poster</ion-title>
+    <ion-buttons class="--ion-justify-content-end" (click)="cancel()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <img alt="Silhouette of mountains" class="post" [src]="eventData.posterUrl" />
+    <ion-card-header>
+      <ion-card-title>{{ eventData.title }}</ion-card-title>
+      <ion-card-subtitle>{{ eventData.hasgtags }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-text>Time: {{ eventData.startDate | date:'dd MMMM yyyy, h:mm a'}}</ion-text>
+      Location: 
+      <ion-text *ngIf="eventData?.AddressLine1 || eventData?.AddressLine2 || getLocationText2(eventData?.suburb) || getLocationText1(eventData?.city)">Location: 
+        <span *ngIf="eventData?.AddressLine1">{{ eventData.AddressLine1 }}, </span>
+        <span *ngIf="eventData?.AddressLine2">{{ eventData.AddressLine2 }}, </span>
+        <span *ngIf="getLocationText2(eventData?.suburb)">{{ getLocationText2(eventData?.suburb) }}, </span>
+        <span *ngIf="getLocationText1(eventData?.city)">{{ getLocationText1(eventData?.city) }}</span>
+      </ion-text>
+      <br>
+      
+      <ion-text *ngIf="eventData.onlineEventLink">
+        Online Link:
+        <a (click)="openYoutubeModal(eventData.onlineEventLink)" style="color: primary;">
+          {{ eventData.onlineEventLink }}
+        </a>
+      </ion-text>
+
+      <br>
+      <ion-text *ngIf="eventData.eventDescription">Description : 
+        
+          <span *ngIf="eventData.eventDescription" color="primary">{{ eventData.eventDescription }}</span>
+       
+      </ion-text>
+      
+      <h1>Lineup</h1>
+      <!-- Display other event details here -->
+      <ion-text>{{ eventData.selectedGuestsText }}</ion-text>
+      
+      <br>
+      <br>
+      <ion-icon class="icons" id="reminder" (click)="onIconClick('reminder')" [name]="reminderIcon"></ion-icon>
+      
+      <!-- Pass UID directly to navigateToChat -->
+      <ion-icon class="icons" id="chat" name="chatbox" (click)="openChat(eventData)"></ion-icon>
+      <br>
+    
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,37 @@
+.input{
+    font-size:300;
+  
+  }
+  ion-item{
+    --background:'#f1f1f1';
+    border-radius: 10px;
+    margin-bottom: 16px;
+  
+  }
+  
+  .header{
+      margin-top: 50px;
+      margin-bottom:  80px;
+      text-align: center;
+      .subTitle{
+          color:grey;
+          font-size: 0.9rem;
+      }
+      title{
+          font-size: 2rem;
+      }
+  
+   }
+  
+   .logo-container {
+      display: flex;
+    justify-content: center;
+    align-items: center;
+      height: 50px; 
+    }
+    
+    .logo {
+      max-height:180px;
+      width: 200px;
+      margin-top:35px;
+    }

@@ -1,0 +1,91 @@
+ion-toolbar{
+  height: 90px;
+ }
+
+ .logo-container {
+  display: flex;
+  align-items: center;
+  
+}
+
+.logo-image {
+  width: 180px; /* Adjust this value to make the image smaller */
+  height: 180px; /* Adjust this value to make the image smaller */
+  margin-top: -55px;
+}
+
+.icon-image {
+ /* Adjust this value to make the image smaller */
+  /* Adjust this value to make the image smaller */
+  margin-top: -55px;
+  margin-right: 20px;
+  font-size: 30px;
+}
+
+.option{
+  margin-left : 280px;  
+  margin-right: 30px;
+
+}
+.card{
+  margin-top: 5px;
+  height: 100%;
+  width: 100%;
+  list-style: none;
+  margin-left: -30px;
+}
+
+.photo{
+  width: 100%;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+
+
+.btn{
+  width: 130px;
+}
+
+ion-card-title {
+  margin-left: 10px;
+}
+
+ion-card-subtitle{
+  margin-left: 10px;
+
+}
+
+/*.move-up {
+  margin-top: -50px; /* Adjust the value as needed to move it higher */
+//}
+
+.custom-placeholder {
+  color: #1592cc; /* Specify the desired color */
+  font-weight: bold;
+}
+
+.custom-divider {
+  border-top: 1px solid #1384b8; /* Specify the desired color and line style */
+  margin-top: 10px; /* Adjust the margin as needed to control spacing */
+}
+
+.up{
+  margin-top: -55px;
+}
+
+.container{
+  text-align: center;
+  margin-top: 50%;
+  
+}
+
+
+
+.bin{
+font-size: 30px;
+}

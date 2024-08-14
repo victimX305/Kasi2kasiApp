@@ -1,0 +1,52 @@
+<ion-header [translucent]="true" *ngIf="internetStatus">
+  <ion-toolbar>
+    <ion-title>Feedback</ion-title>
+    <ion-buttons class="--ion-justify-content-end" (click)="navigateToHome()" slot="end">
+      <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="internetStatus">
+  <div class="container">
+    <div class="form-container">
+      <form class="form" (submit)="submitFeedback()">
+        <div class="form-group">
+          <label for="uid">Uid</label>
+          <input type="text" id="uid" name="uid" required [(ngModel)]="uid" disabled>
+        </div>
+        <div class="form-group">
+          <label for="textarea">Feedback</label>
+          <textarea name="textarea" id="textarea" rows="10" cols="50" required [(ngModel)]="feedback"></textarea>
+        </div>
+        <button class="form-submit-btn" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</ion-content>
+
+<div *ngIf="!internetStatus" class="no-internet-message">
+  <div class="center-card">
+    <div class="cards">
+      <div class="header">
+        <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" stroke-linejoin="round" stroke-linecap="round"></path>
+                  </svg></div>
+        <div class="content">
+           <span class="title">No Internet</span>
+           <p class="message">Failed to load events due to network issues. Make sure that you are connected to the internet. Try again.</p>
+        </div>
+         <div class="actions">
+           <button class="cancel" type="button" (click) = "retry()">Retry</button>
+        </div>
+      </div>
+      </div>
+    </div>
+</div>
+
+<ion-footer >
+  <div class="container2">
+    <h4 style="font-weight: bold; color: black;">KASI2KASI</h4>
+    <p style="font-weight: lighter; font-size: smaller; text-align: center;color: rgb(11, 12, 12);">@ 2023 Designed by ALLiNiT | All RightS Reserved</p>
+  </div>
+</ion-footer>

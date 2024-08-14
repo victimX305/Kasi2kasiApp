@@ -1,0 +1,143 @@
+ion-content{
+  ion-list{
+      ion-list-header{
+      font-weight: 600;
+      font-size: 1rem;
+      }
+  
+  ion-item{
+      margin-top: 2vh;
+      ion-label{
+          font-size: 1.2rem;
+          p{
+              margin-top: 3px;
+          }
+      }
+      ion-text{
+          font-size: 0.9rem;
+      }
+  }
+  
+  }
+}
+/* chat.page.scss */
+.new-messages-badge {
+  position: absolute;
+  top: 20px; /* Adjust the top position as needed */
+  right: 20px; /* Adjust the right position as needed */
+  background-color: red;
+  color: white;
+  font-size: 14px;
+  border-radius: 50%;
+  padding: 5px 10px;
+  min-width: 20px;
+  text-align: center;
+}
+.new-message {
+  color: red;
+}
+.new-message-counter {
+  background-color: red; /* Set your preferred background color */
+  color: white; /* Set your preferred text color */
+  font-size: 12px; /* Set your preferred font size */
+  border-radius: 50%; /* Optional: Make it round */
+  padding: 2px 6px; /* Optional: Add some padding for better visual appearance */
+}
+.margin-top{
+  font-size: 18px;
+font-weight: bold;
+color: #333; /* Adjust the color as needed */
+margin-bottom: 8px;
+margin-left: 20px;
+
+}
+.custom-label {
+  margin-right: 16px;
+  text-align: center; /* Adjust the margin-right as needed */
+}
+.chat-date{
+  font-size: 0.7rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+.new-message-badge {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 8px;
+  font-size: 12px;
+  align-self: flex-end; /* Align badge to the right */
+}
+/* Add this to your global styles or component-specific styles */
+
+.unread-count-badge-below {
+background-color: red;
+color: white;
+padding: 0.25em 0.5em;
+border-radius: 50%;
+font-size: 0.8em;
+margin-left: 10px;
+margin-top: 4px; /* Adjust as needed */
+}
+.rounded-avatar img {
+border-radius: 50%;
+}
+.chat-item-content {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.chat-item-main {
+flex: 1;
+display: flex;
+flex-direction: column;
+overflow: hidden;
+}
+
+.message-container {
+display: flex;
+align-items: center;
+overflow: hidden;
+width: 100%;
+}
+
+.message-type {
+display: flex;
+align-items: center;
+}
+
+.message-type ion-icon {
+font-size: 1.2em;
+}
+
+.message-type span {
+font-size: 0.8em;
+margin-left: 4px;
+}
+
+.truncate-text {
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+color: rgb(83, 81, 81);
+flex: 1;
+min-width: 0;
+margin-right: 2px; /* Adjust to ensure the unread count is not overlapped */
+}
+
+.chat-item-meta {
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+flex-shrink: 0; /* Ensure it doesn't shrink */
+margin-left: 8px; /* Ensure space between the text and meta info */
+}
+
+.unread-count-badge {
+background-color: red;
+color: white;
+padding: 2px 6px;
+border-radius: 12px;
+font-size: 0.8em;
+margin-top: 4px; /* Ensure space between the time and unread count */
+}

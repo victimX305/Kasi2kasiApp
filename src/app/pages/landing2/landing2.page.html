@@ -1,0 +1,135 @@
+<div *ngIf="internetStatus" class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start" class="logo-container">
+        <div class="custom-divider"></div>
+        <img src="assets/LOGO.png" alt="Logo" class="logo-image">
+      </ion-buttons>
+      <ion-buttons slot="end" class="icon-image">
+        <ion-button fill="clear" [routerLink]="['/login']">Login</ion-button>
+        <ion-button fill="clear" [routerLink]="['/sign-up']">Register</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content *ngIf="internetStatus" [fullscreen]="true">
+    <ion-list class="move-up">
+      <ion-item>
+        <ion-select interface="popover" placeholder="Location" class="custom-placeholder" [(ngModel)]="selectedProvince" [ngModelOptions]="{standalone: true}" (ionChange)="filterEventsByProvince()">
+          <ion-select-option value="all" (click)="all()">Provinces</ion-select-option>
+          <ion-select-option value="Gauteng">Gauteng</ion-select-option>
+          <ion-select-option value="Western Cape">Western Cape</ion-select-option>
+          <ion-select-option value="KwaZulu-Natal">KwaZulu-Natal</ion-select-option>
+          <ion-select-option value="North West">North West</ion-select-option>
+          <ion-select-option value="Mpumalanga">Mpumalanga</ion-select-option>
+          <ion-select-option value="Eastern Cape">Eastern Cape</ion-select-option>
+          <ion-select-option value="Free State">Free State</ion-select-option>
+          <ion-select-option value="Limpopo">Limpopo</ion-select-option>
+          <ion-select-option value="Northern Cape">Northern Cape</ion-select-option>
+        </ion-select>
+
+        <ion-select interface="popover" slot="end" class="custom-placeholder" placeholder="Category" [(ngModel)]="selectedCategory" [ngModelOptions]="{standalone: true}" (ionChange)="filterEventsByCategory()">
+          <ion-select-option value="all" (click)="all()">All Categories</ion-select-option>
+          <ion-select-option value="Birthday Celebration">Birthday Celebration</ion-select-option>
+          <ion-select-option value="Business Event">Business Event</ion-select-option>
+          <ion-select-option value="Community Meetings">Community Meetings</ion-select-option>
+          <ion-select-option value="Concerts">Concerts</ion-select-option>
+          <ion-select-option value="Exhibitions">Exhibitions</ion-select-option>
+          <ion-select-option value="House Party">House Party</ion-select-option>
+          <ion-select-option value="Lounge Events">Lounge Events</ion-select-option>
+          <ion-select-option value="Peforming Arts">Performing Arts</ion-select-option>
+          <ion-select-option value="Poetry">Poetry</ion-select-option>
+          <ion-select-option value="Sports & Outdoor">Sports & Outdoor</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-text>Search using event title, province, district, municipality, city, suburb, and ward number.</ion-text>
+
+    <ion-searchbar show-clear-button="never" [(ngModel)]="searchText" (input)="filterEvents()"></ion-searchbar>
+
+    <div *ngIf="showNoMatchesMessage && filteredEvents.length === 0" class="no-matches">
+      No matching events found.
+    </div>
+
+    
+    <div class="ion-padding card-container">
+      <ng-container *ngIf="events.length > 0; else noEventsMessage">
+        <ion-item lines="none" *ngFor="let event of filteredEvents" class="card" (click)="OpenModal(event)">
+          <ion-card *ngIf="event.posterUrl && event.startDate && event.title && event.eventType">
+            <img class="post" [src]="event.posterUrl"/>
+            <ion-card-subtitle>{{ event.startDate | date:'dd MMMM yyyy, h:mm a' }}</ion-card-subtitle>
+            <ion-card-title class="card-title-container">
+              <div class="card-title">{{ event.title }}</div>
+            </ion-card-title>
+            <ion-card-content class="indawo">
+              <ion-icon class="location" name="location"></ion-icon>
+              <ng-container *ngIf="isArray(event.city)">
+                <ng-container *ngFor="let city of event.city">
+                  <span *ngIf="event.city">{{ city.names }}</span>
+              </ng-container>
+             </ng-container>
+             <span *ngIf="!isArray(event.city) && !event.city">Online Event</span>                 
+
+              <ng-container *ngIf="isObjectWithNames(event.city)">
+                <span>{{ event.city.names }}</span>
+              </ng-container>
+              <ng-container *ngIf="!isArray(event.city) && !isObjectWithNames(event.city)">
+                <span>{{ event.city }}</span>
+              </ng-container>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+      </ng-container>
+      <ng-template #noEventsMessage>
+        <p>No events found for the selected province.</p>
+      </ng-template>
+    </div>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" sizeMd="8" sizeLg="6" sizeXl="4">
+        <ion-row>
+          <ion-col size="3">
+            <ion-button expand="full" (click)="navigateBackward()" [disabled]="currentPage === 1">
+              <ion-icon name="arrow-back"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="full" (click)="loadMore()" [disabled]="currentPage * pageSize >= eventCount">
+              Load More
+            </ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button expand="full" (click)="navigateForward()" [disabled]="currentPage * pageSize >= eventCount">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <br><br>
+    <p class="ion-text-center">Page {{ currentPage }}</p>
+  </ion-content>
+
+  <div *ngIf="!internetStatus" class="no-internet-message">
+    <div class="center-card">
+      <div class="cards">
+        <div class="header">
+          <div class="image">
+            <svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+              <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" stroke-linejoin="round" stroke-linecap="round"></path>
+            </svg>
+          </div>
+          <div class="content">
+            <span class="title">No Internet</span>
+            <p class="message">Failed to load events due to network issues. Make sure that you are connected to the internet. Try again.</p>
+          </div>
+          <div class="actions">
+            <button class="cancel" type="button" (click)="retry()">Retry</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
