@@ -41,10 +41,13 @@
 
         <ion-menu-toggle auto-hide="false" [routerLink]="['/manage-gigs']">
           <ion-item>
-            <ion-icon slot="start" name="settings"></ion-icon>
+            <ion-icon slot="start" name="list-outline"></ion-icon>
             <ion-label>Gig Guide</ion-label>
+            <ion-badge color="danger" *ngIf="gigCount > 0">{{ gigCount }}</ion-badge>
           </ion-item>
         </ion-menu-toggle>
+        
+        
         <ion-menu-toggle auto-hide="false" [routerLink]="['/artist4']">
           <ion-item>
             <ion-icon  slot="start" name="search-circle"></ion-icon> 
@@ -61,8 +64,9 @@
 
         <ion-menu-toggle auto-hide="false" [routerLink]="['/chats']">
           <ion-item>
-            <ion-icon slot="start" name="chatbubble-ellipses"></ion-icon> 
+            <ion-icon slot="start" name="chatbubble-ellipses"></ion-icon>
             <ion-label>Chats</ion-label>
+            <ion-badge *ngIf="unreadMessagesCount > 0" color="danger">{{ displayUnreadMessagesCount }}</ion-badge>
           </ion-item>
         </ion-menu-toggle>
         

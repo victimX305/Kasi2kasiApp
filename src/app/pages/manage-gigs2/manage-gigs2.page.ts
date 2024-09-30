@@ -6,6 +6,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { EventDetailsPage } from '../event-details/event-details.page';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GigHistoryPage } from 'src/app/gig-history/gig-history.page';
+import { GigService } from '../manage-gigs/gig.service';
 
 
 
@@ -42,6 +43,7 @@ export class ManageGigs2Page implements OnInit {
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
     public actionSheetController: ActionSheetController,
+    private gigService: GigService 
     ) {}
 
     openEventDetails(inforEvent: any){
@@ -96,6 +98,7 @@ export class ManageGigs2Page implements OnInit {
                     });
                     this.events = filteredEvents;
                     this.filterEvents();
+                    this.gigService.updateGigCount(this.filteredEvents.length);
                     
                   }
               });
@@ -122,6 +125,7 @@ export class ManageGigs2Page implements OnInit {
       this.filteredEvents = [...this.events];
     }
     this.showNoMatchesMessage = this.filteredEvents.length === 0;
+    this.gigService.updateGigCount(this.filteredEvents.length);
   }
 
   navigateToHome(){

@@ -7,6 +7,7 @@ import { Observable, BehaviorSubject, Subscription, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { EventService } from '../eventService/eventService';
+import { GigService } from '../manage-gigs/gig.service';
 
 interface EventData {
   city: any;
@@ -30,6 +31,7 @@ interface EventData {
   styleUrls: ['./home-event-guest.page.scss'],
 })
 export class HomeEventGuestPage implements OnInit {
+  gigCount: number = 0;
   @ViewChild('content', { static: false }) content: IonContent;
 
   user: any;
@@ -72,7 +74,8 @@ export class HomeEventGuestPage implements OnInit {
     private router: Router,
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private eventService: EventService
+    private eventService: EventService,
+    private gigService: GigService
   ) {
     this.eventsCollection = this.firestore.collection('events');
 
@@ -115,6 +118,9 @@ export class HomeEventGuestPage implements OnInit {
       } else {
         console.log('User not authenticated.');
       }
+    });
+    this.gigService.currentGigCount.subscribe(count => {
+      this.gigCount = count;
     });
   }
 

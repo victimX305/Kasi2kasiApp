@@ -14,17 +14,18 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class Artist3Page implements OnInit {
 
+  name: string = '';
   filteredGuests: any[] = [];
   searchText: string = '';
   guestReg: any[] = [];
   showNoMatchesMessage: boolean = false;
+  Guests!: any[];
   internetStatus: boolean = false;
 
   constructor(
     private userRegistrationService: UserRegistrationService,
     private router: Router,
     private firestore: AngularFirestore,
-
     private modalController: ModalController
   ) { }
 
@@ -37,7 +38,6 @@ export class Artist3Page implements OnInit {
     this.loadGuestsAndEvent();
   }
 
- 
   loadGuestsAndEvent() {
     const partnerQuery = this.firestore.collection('users', ref => ref.where('registrationType', '==', 'GuestEvent').where('verified', '==', true)).valueChanges();
     const guestQuery = this.firestore.collection('users', ref => ref.where('registrationType', '==', 'guest').where('verified', '==', true)).valueChanges();
@@ -53,10 +53,11 @@ export class Artist3Page implements OnInit {
           });
       })
     ).subscribe((combinedData) => {
+      this.guestReg = combinedData;
       this.filteredGuests = combinedData;
     });
   }
-  
+
   filterArtists() {
     if (this.searchText.trim() !== '') {
       this.filteredGuests = this.guestReg.filter((artist) =>
@@ -84,7 +85,6 @@ export class Artist3Page implements OnInit {
     this.showNoMatchesMessage = false;
   }
 
-
   OpenModal(artist: any) {
     this.modalController.create({
       component: ArtistProPage,
@@ -107,6 +107,7 @@ export class Artist3Page implements OnInit {
   }
 
   retry() {
-    window.location.reload();
+    window.location.reload(); // Refresh the page when data is fetched
   }
+
 }

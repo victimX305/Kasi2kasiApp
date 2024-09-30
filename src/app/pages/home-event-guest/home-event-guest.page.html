@@ -48,8 +48,9 @@
 
         <ion-menu-toggle auto-hide="false" [routerLink]="['/manage-gigs2']">
           <ion-item>
-            <ion-icon  slot="start" name="person-circle"></ion-icon> 
+            <ion-icon slot="start" name="list-outline"></ion-icon>
             <ion-label>Gig Guide</ion-label>
+            <ion-badge *ngIf="gigCount > 0" color="danger">{{ gigCount }}</ion-badge>
           </ion-item>
         </ion-menu-toggle>
 

@@ -25,6 +25,7 @@ import { OderByTheMostRecentPipePipe } from './oder-by-the-most-recent-pipe.pipe
 import { EventService } from './services/event-service.service';
 import { SettingsPopoverComponent } from './pages/chating/chating.page';
 import { CommonModule } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 //import { UserListComponent } from './components/user-list/user-list.component';
 
 firebase.initializeApp(environment.firebaseConfig);
@@ -78,7 +79,7 @@ function configureFirebasePersistence(afAuth: AngularFireAuth) {
   providers: [
     ChatService,
     EventService,
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide: LocationStrategy, useClass: HashLocationStrategy },
     {
       provide: APP_INITIALIZER,
       useFactory: configureFirebasePersistence,

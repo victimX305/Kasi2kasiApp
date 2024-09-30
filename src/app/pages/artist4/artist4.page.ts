@@ -15,11 +15,13 @@ import { map } from 'rxjs/operators';
 export class Artist4Page implements OnInit {
 
   name: string = '';
-  artist: any [] = [];
   filteredGuests: any[] = [];
   searchText: string = '';
   guestReg: any[] = [];
   showNoMatchesMessage: boolean = false;
+
+  Guests!: any[];
+  internetStatus: boolean = false;
 
   constructor(
     private userRegistrationService: UserRegistrationService,
@@ -34,8 +36,6 @@ export class Artist4Page implements OnInit {
   navigateTo(){
     this.router.navigate(['/guest-home'])
   }
-
-
 
   ionViewDidEnter() {
     this.loadGuestsAndEvent();
@@ -56,6 +56,7 @@ export class Artist4Page implements OnInit {
           });
       })
     ).subscribe((combinedData) => {
+      this.guestReg = combinedData;
       this.filteredGuests = combinedData;
     });
   }
@@ -83,11 +84,11 @@ export class Artist4Page implements OnInit {
 
   ngOnInit() {
     this.loadGuestsAndEvent();
+    this.checkInternetStatus(); 
     this.showNoMatchesMessage = false;
   }
 
-
-  OpenModal(artist:any) {
+  OpenModal(artist: any) {
     this.modalController.create({
       component: ArtistProPage,
       componentProps: {
@@ -98,5 +99,18 @@ export class Artist4Page implements OnInit {
     });
   }
 
+  checkInternetStatus() {
+    this.internetStatus = navigator.onLine;
+    window.addEventListener('online', () => {
+      this.internetStatus = true;
+    });
+    window.addEventListener('offline', () => {
+      this.internetStatus = false;
+    });
+  }
+
+  retry() {
+    window.location.reload(); // Refresh the page when data is fetched
+  }
 
 }

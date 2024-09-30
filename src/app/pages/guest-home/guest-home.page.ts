@@ -3,10 +3,11 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { Router } from '@angular/router';
 import { IonContent, ModalController } from '@ionic/angular';
 import { PosterPagePage } from '../poster-page/poster-page.page';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { EventService } from '../eventService/eventService';
+import { GigService } from '../manage-gigs/gig.service';
 
 interface EventData {
   city: any;
@@ -30,7 +31,9 @@ interface EventData {
   styleUrls: ['./guest-home.page.scss'],
 })
 export class GuestHomePage implements OnInit {
+  gigCount: number = 0;
   @ViewChild('content', { static: false }) content: IonContent;
+
 
 
   user: any;
@@ -45,6 +48,13 @@ export class GuestHomePage implements OnInit {
   filteredEvents: any [] = [];
   showNoMatchesMessage: boolean = false;
   lastVisibleEvent: any = null;
+  totalUnreadMessages: number = 0;
+  totalUnreadMessages$: Observable<number>;
+  displayUnreadMessagesCount: string = '0';
+  private unreadMessagesCountSubject = new BehaviorSubject<number>(0);
+  unreadMessagesCount$: Observable<number> = this.unreadMessagesCountSubject.asObservable();
+  private unreadMessagesCountSubscription: Subscription;
+  unreadMessagesCount: number = 0;
 
   private eventsCollection: AngularFirestoreCollection<any>;
   private eventPages: { [page: number]: EventData[] } = {};
@@ -65,7 +75,8 @@ export class GuestHomePage implements OnInit {
     private router: Router, 
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private eventService: EventService
+    private eventService: EventService,
+    private gigService: GigService
   ) {
     this.eventsCollection = this.firestore.collection('events');
     
@@ -107,6 +118,9 @@ export class GuestHomePage implements OnInit {
       } else {
         console.log('User not authenticated.');
       }
+    });
+    this.gigService.currentGigCount.subscribe(count => {
+      this.gigCount = count;
     });
   
   }
@@ -157,11 +171,32 @@ export class GuestHomePage implements OnInit {
     this.eventService.deletePastEvents();
     this.showNoMatchesMessage = false;
     this.filterEvents();
+    this.getTotalUnreadMessages().then(count => {
+      this.unreadMessagesCount = count;
+      this.updateDisplayCount(count);
+    }).catch(error => {
+      console.error('Error fetching unread messages count:', error);
+    });
+  
+    // Subscribe to real-time updates
+    this.subscribeToUnreadMessages();
+    this.unreadMessagesCountSubscription = this.unreadMessagesCount$
+      .subscribe(count => {
+        this.unreadMessagesCount = count;
+        this.updateDisplayCount(count);
+      });
+      this.checkGigCount();   
   }
 
   fetchEventCount() {
     this.eventsCollection.get().subscribe(querySnapshot => {
       this.eventCount = querySnapshot.size;
+    });
+  }
+
+  checkGigCount() {
+    this.gigService.currentGigCount.subscribe(count => {
+      this.gigCount = count;
     });
   }
 
@@ -347,5 +382,89 @@ private getQuery() {
   login(){
     this.router.navigate(['/login']);
   }
+
+  getCurrentUserId(): Promise<string | null> {
+    return new Promise<string | null>((resolve, reject) => {
+      this.afAuth.authState.subscribe(user => {
+        if (user) {
+          resolve(user.uid);
+        } else {
+          reject('No user logged in');
+        }
+      });
+    });
+  }
+
+    // Method to fetch total unread messages count
+    async getTotalUnreadMessages(): Promise<number> {
+      try {
+        const currentUserId = await this.getCurrentUserId();
+        if (!currentUserId) {
+          throw new Error('No user logged in');
+        }
+  
+        // Fetch chatrooms where the current user is a member
+        const chatroomSnapshot = await this.firestore.collection('chatRooms', ref => ref.where('members', 'array-contains', currentUserId))
+          .get().toPromise();
+  
+        const chatroomIds = chatroomSnapshot.docs.map(doc => doc.id);
+        let totalUnreadCount = 0;
+  
+        // Fetch messages from each chatroom where unreadCount is 1 and the sender is not the current user
+        const unreadMessagesPromises = chatroomIds.map(chatroomId => 
+          this.firestore.collection(`chats/${chatroomId}/messages`, ref => ref.where('unreadCount', '==', 1).where('sender', '!=', currentUserId))
+            .get().toPromise()
+        );
+  
+        const messageSnapshots = await Promise.all(unreadMessagesPromises);
+        messageSnapshots.forEach(snapshot => {
+          totalUnreadCount += snapshot.docs.length;
+        });
+  
+        return totalUnreadCount;
+  
+      } catch (error) {
+        console.error('Error fetching unread messages count:', error);
+        return 0;
+      }
+    }
+    // Real-time listener for unread messages
+    subscribeToUnreadMessages() {
+      this.getCurrentUserId().then(currentUserId => {
+        if (!currentUserId) {
+          throw new Error('No user logged in');
+        }
+  
+        this.firestore.collection('chatRooms', ref => ref.where('members', 'array-contains', currentUserId))
+          .snapshotChanges().subscribe(chatroomSnapshots => {
+            const chatroomIds = chatroomSnapshots.map(snapshot => snapshot.payload.doc.id);
+            let totalUnreadCount = 0;
+  
+            // Create observables for each chatroom's unread messages
+            const unreadMessagesObservables = chatroomIds.map(chatroomId => 
+              this.firestore.collection(`chats/${chatroomId}/messages`, ref => ref.where('unreadCount', '==', 1).where('sender', '!=', currentUserId))
+                .snapshotChanges()
+            );
+  
+            // Merge all observables and calculate the total unread count
+            combineLatest(unreadMessagesObservables).subscribe(results => {
+              totalUnreadCount = results.reduce((sum, snapshot) => sum + snapshot.length, 0);
+              this.unreadMessagesCountSubject.next(totalUnreadCount);
+            });
+          });
+      }).catch(error => {
+        console.error('Error subscribing to unread messages:', error);
+      });
+    }
+    ngOnDestroy() {
+      // Clean up subscription to avoid memory leaks
+      if (this.unreadMessagesCountSubscription) {
+        this.unreadMessagesCountSubscription.unsubscribe();
+      }
+    }
+  
+    private updateDisplayCount(count: number) {
+      this.displayUnreadMessagesCount = count > 9 ? '9+' : count.toString();
+    }
 }
 

@@ -1,58 +1,53 @@
-<ion-header *ngIf="internetStatus" [translucent]="true">
+<ion-header [translucent]="true">
+ 
   <ion-toolbar>
-    <ion-title>Artist Profile</ion-title>
+   
+    <ion-title slot="start" class="titles">Profile</ion-title>
+   
     <ion-buttons class="--ion-justify-content-end" (click)="cancel()"  slot="end">
       <ion-icon name="close"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="internetStatus" [fullscreen]="true">
-  <ion-card>
-    <!-- Add an ngIf to display artist details when an artist is selected -->
-      <img class = "photo" [src]=" selectedArtist.proPic"/>
-      <ion-card-header>
-        <!-- Display artist's full name and stage name -->
-        <ion-card-title>{{ selectedArtist.StageName }}</ion-card-title>
-        <ion-card-subtitle>{{ selectedArtist.fullname }}</ion-card-subtitle>
-      </ion-card-header>
-      
-      <ion-card-content>
-        <!-- Display artist type and email -->
-        <ion-text>Artist Type: {{ selectedArtist.ArtistType}}</ion-text>
-        <br>
-        <ion-text>Email: {{ selectedArtist.email }}</ion-text>
-        <br>
+<ion-content>
+  <ion-row class = "ion-justify-content-center">
+    <ion-col size = "12" sizeMd = "8" sizeLg="6" sizeXl="4">
+      <div class="card-container">
+   
+        <ion-card-content>
+          <ion-card-title >{{selectedArtist.StageName  }}</ion-card-title>
+  <div class="container2">
+  <div class="square-frame">  
+      <img class="avatar" [src]=" selectedArtist.proPic"/>
+  </div>
+  </div>
 
-        <!-- Display social media links using ngFor -->
-        <ion-text >
-          Social Media Links:        <br>
-         <a [href]="selectedArtist.SocialMediaLinks" target ="_blank"> {{ selectedArtist.SocialMediaLinks }}</a>
-<br>
-          <a [href]="selectedArtist.YouTubeLink" target ="_blank"> {{ selectedArtist.YouTubeLink }}</a>
-          <br>
 
-        </ion-text>
-      </ion-card-content>
-  </ion-card>
+      <ion-list >
+        <ion-item> 
+          <ion-text>: {{ selectedArtist.fullname }}</ion-text>
+          <ion-icon name="person" slot="start"></ion-icon>
+        </ion-item>
+  
+        <ion-item>
+          
+          <ion-text>: {{ selectedArtist.email }}</ion-text>
+          <ion-icon name="mail" slot="start"></ion-icon>
+        </ion-item>
+
+        <ion-item>
+          
+          <ion-text>: {{selectedArtist.province }}</ion-text>
+          <ion-icon name="location" slot="start"></ion-icon>
+        </ion-item>
+
+      </ion-list>
+      <br>
+      <br>
+    </ion-card-content>
+  </div>
+
+</ion-col>
+</ion-row>
 </ion-content>
-
-
-<div *ngIf="!internetStatus" class="no-internet-message">
-  <div class="center-card">
-    <div class="cards">
-      <div class="header">
-        <div class="image"><svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" stroke-linejoin="round" stroke-linecap="round"></path>
-                  </svg></div>
-        <div class="content">
-           <span class="title">No Internet</span>
-           <p class="message">Failed to load events due to network issues. Make sure that you are connected to the internet. Try again.</p>
-        </div>
-         <div class="actions">
-           <button class="cancel" type="button" (click) = "retry()">Retry</button>
-        </div>
-      </div>
-      </div>
-    </div>
-</div>

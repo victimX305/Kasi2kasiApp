@@ -30,22 +30,26 @@
   <ion-list>
         <ion-item>
           
-          <ion-text>{{ user?.me || 'Regular User' }}</ion-text>
+          <ion-text>: {{ user?.me || 'Regular User' }}</ion-text>
+          <ion-icon name="person" slot="start"></ion-icon>
         </ion-item>
   
         <ion-item>
           
-          <ion-text>{{ user?.email || 'Email not provided' }}</ion-text>
+          <ion-text>: {{ user?.email || 'Email not provided' }}</ion-text>
+          <ion-icon name="mail" slot="start"></ion-icon>
         </ion-item>
 
         <ion-item>
          
-          <ion-text>{{ user?.province || 'Email not provided' }}</ion-text>
+          <ion-text>: {{ user?.province || 'Email not provided' }}</ion-text>
+          <ion-icon name="location" slot="start"></ion-icon>
         </ion-item>
 
         <ion-item>
       
-          <ion-text>{{ user?.phonenumber || 'Email not provided' }}</ion-text>
+          <ion-text>: {{ user?.phonenumber || 'Email not provided' }}</ion-text>
+          <ion-icon name="call" slot="start"></ion-icon>
         </ion-item>
       </ion-list>
     </ion-card-content>
